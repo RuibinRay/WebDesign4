@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kelp · Holdfast</title>
+  <meta name="description" content="Holdfast shoes: built on the grip of things that hold on for a living.">
+  <meta name="theme-color" content="#EDEFE8">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=Martian+Mono:wdth,wght@75..112.5,300..700&display=swap">
+  <link rel="stylesheet" href="css/holdfast.css">
+  <script src="js/motion.js"></script>
+</head>
+<body class="page-shoe">
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="nav" data-nav>
+    <a class="brand" href="index.html" aria-label="Holdfast, home"><span class="brand__mark" data-mark></span><span class="brand__word">Holdfast</span></a>
+    <nav class="nav__links" aria-label="Main">
+      <a href="index.html#shoes">Shoes</a>
+      <a href="index.html#lab">Grip Lab</a>
+      <a href="index.html#field">Field</a>
+      <a href="index.html#story">Story</a>
+    </nav>
+    <div class="nav__end">
+      <button class="nav__motion" type="button" data-motion-toggle aria-pressed="false" aria-label="Reduce motion"><span class="nav__motion-dot" aria-hidden="true"></span><span class="nav__motion-label">Motion on</span></button>
+      <button class="nav__bag" type="button" data-bag aria-label="Bag, 0 items">Bag <span class="nav__count" data-bag-count>0</span></button>
+    </div>
+  </header>
+
+  <main id="main" class="pdp">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html#shoes">Shoes</a><span aria-hidden="true">/</span><span aria-current="page" data-p="name"></span></nav>
+
+      <div class="pdp__grid">
+        <section class="gallery" aria-label="Photos">
+          <div class="gallery__main" data-gallery-frame>
+            <figure class="slot" data-gallery-main data-sizes="(max-width: 1000px) 100vw, 58vw"></figure>
+            <div class="view3d" data-view3d hidden>
+              <canvas class="view3d__canvas" role="img" data-view3d-canvas></canvas>
+              <div class="view3d__bar">
+                <span class="view3d__hint">Drag to turn</span>
+                <div class="view3d__btns" role="group" aria-label="3D view">
+                  <button type="button" data-v="three" aria-pressed="true">Turn</button>
+                  <button type="button" data-v="side" aria-pressed="false">Side</button>
+                  <button type="button" data-v="sole" aria-pressed="false">Sole</button>
+                  <button type="button" data-v="explode" aria-pressed="false">Apart</button>
+                </div>
+              </div>
+              <span class="view3d__tag" data-view3d-tag></span>
+            </div>
+          </div>
+          <div class="gallery__thumbs" data-gallery-thumbs></div>
+        </section>
+
+        <section class="buy" aria-labelledby="pdp-name">
+          <div class="buy__head">
+            <p class="label"><span data-p="kind"></span> Learned from <span data-p="learned" style="color:inherit"></span></p>
+            <h1 class="pdp__name" id="pdp-name" data-p="name"></h1>
+          </div>
+          <div class="buy__price"><b data-p="price"></b><span data-p="terrain"></span></div>
+          <p class="buy__line" data-p="line"></p>
+
+          <fieldset class="opt">
+            <legend><span>Colour</span><span data-p="color"></span></legend>
+            <div class="swatches" data-swatches></div>
+          </fieldset>
+
+          <fieldset class="opt">
+            <legend><span>Size (US)</span><span>True to size</span></legend>
+            <div class="sizes" role="radiogroup" aria-label="Size" data-size-grid></div>
+          </fieldset>
+
+          <div>
+            <button class="btn btn--ink buy__add" type="button" data-add>Add to bag</button>
+            <p class="buy__hint" aria-live="polite" data-hint></p>
+          </div>
+          <ul class="perks">
+            <li>Free shipping and 60-day returns, worn outside or not</li>
+            <li>Outsole re-grip service when the lugs wear down</li>
+          </ul>
+        </section>
+      </div>
+    </div>
+
+    <section class="pdp-sec pdp-sec--dark" aria-labelledby="how-title">
+      <div class="wrap">
+        <header class="sec-head">
+          <p class="label"><span>01</span> How it grips</p>
+          <h2 class="h2" id="how-title" data-p="how-title"></h2>
+        </header>
+        <div class="how">
+          <figure class="slot" data-how-nature data-sizes="(max-width: 980px) 100vw, 33vw"></figure>
+          <div class="how__sole" data-how-sole></div>
+          <div class="how__text">
+            <div><small>How it holds</small><p data-p="how-animal"></p></div>
+            <div><small>How the sole copies it</small><p data-p="how-sole"></p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pdp-sec" aria-labelledby="spec-title">
+      <div class="wrap specs">
+        <div>
+          <p class="label"><span>02</span> Specs</p>
+          <h2 class="h3" id="spec-title" style="margin:18px 0 28px">The numbers.</h2>
+          <table class="spec-table" data-specs></table>
+        </div>
+        <div>
+          <p class="label"><span>03</span> Where it grips best</p>
+          <h2 class="h3" style="margin:18px 0 28px">Grip by surface.</h2>
+          <div class="meters" data-meters></div>
+          <p class="ramp__note" style="margin-top:22px">Prototype targets. Final figures will come from independent lab testing.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="pdp-sec" style="padding-top:0" aria-labelledby="others-title">
+      <div class="wrap">
+        <p class="label"><span>04</span> The rest of the range</p>
+        <h2 class="h3" id="others-title" style="margin:18px 0 32px">Other ways to hold.</h2>
+        <div class="others" data-others></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot__grid">
+      <div class="foot__brand"><span class="foot__mark" data-mark></span><p class="foot__word">Holdfast</p></div>
+      <nav class="foot__col" aria-label="Shoes">
+        <p class="foot__h">Shoes</p>
+        <a href="shoe.html?m=kelp">Kelp</a><a href="shoe.html?m=gecko">Gecko</a><a href="shoe.html?m=octo">Octo</a><a href="shoe.html?m=limpet">Limpet</a>
+      </nav>
+      <nav class="foot__col" aria-label="Brand">
+        <p class="foot__h">Holdfast</p>
+        <a href="index.html#story">Story</a><a href="index.html#lab">Grip Lab</a><a href="index.html#field">Field</a>
+      </nav>
+      <div class="foot__col">
+        <p class="foot__h">Help</p>
+        <span>Sizing</span><span>Returns</span><span>Repairs</span>
+      </div>
+    </div>
+    <div class="wrap foot__base">
+      <p>Concept brand. Imagery made with Higgsfield; every person shown is generated.</p>
+    </div>
+  </footer>
+
+  <div class="toast" role="status" aria-live="polite" data-toast></div>
+
+  <script src="assets/vendor/lenis.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/shots.js"></script>
+  <script src="assets/img/ready.js"></script>
+  <script src="js/soles.js"></script>
+  <script src="js/media.js"></script>
+  <script src="js/shoe.js"></script>
+  <script src="js/common.js"></script>
+</body>
+</html>

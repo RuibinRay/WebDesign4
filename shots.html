@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shot sheet · Holdfast</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=Martian+Mono:wdth,wght@75..112.5,300..700&display=swap">
+  <link rel="stylesheet" href="css/holdfast.css">
+  <script src="js/motion.js"></script>
+  <style>
+    body { background: var(--foam); color: var(--basalt); }
+    .sheet { padding-block: 48px 96px; }
+    .sheet__head { display: grid; gap: 18px; padding-bottom: 32px; border-bottom: 1px solid var(--line-l); }
+    .sheet__title { display: flex; align-items: center; gap: 14px; }
+    .sheet__title .brand__mark { color: var(--basalt); width: 34px; height: 34px; }
+    .sheet h1 { font-variation-settings: 'wdth' 125; font-weight: 820; font-size: clamp(34px, 4vw, 56px); letter-spacing: -0.03em; line-height: 1; margin: 0; }
+    .stats { display: flex; flex-wrap: wrap; gap: 8px; }
+    .stat { padding: 10px 14px; border: 1px solid var(--line-l); font-family: var(--f-mono); font-size: 12px; }
+    .stat b { font-family: var(--f-sans); font-variation-settings: 'wdth' 125; font-size: 20px; font-weight: 800; margin-right: 6px; }
+    .routes { display: grid; gap: 8px; margin-top: 8px; }
+    @media (min-width: 900px) { .routes { grid-template-columns: 1fr 1fr; } }
+    .route { padding: 20px 22px; background: #fff; border: 1px solid var(--line-l); }
+    .route h2 { margin: 0 0 10px; font-size: 17px; font-variation-settings: 'wdth' 112; font-weight: 750; }
+    .route ol { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 15px; }
+    code, pre { font-family: var(--f-mono); font-size: 12px; }
+    code { background: rgba(14,17,16,.07); padding: 2px 6px; border-radius: 3px; }
+    details.look { margin-top: 8px; border: 1px solid var(--line-l); background: #fff; }
+    details.look summary { padding: 14px 20px; cursor: pointer; font-family: var(--f-mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+    details.look dl { margin: 0; padding: 0 20px 20px; display: grid; gap: 12px; }
+    details.look dt { font-family: var(--f-mono); font-size: 11px; color: var(--slate); }
+    details.look dd { margin: 0; font-size: 14px; }
+    .filters { display: flex; flex-wrap: wrap; gap: 6px; margin: 28px 0 18px; }
+    .filters button { min-height: 38px; padding: 0 14px; border-radius: 99px; border: 1px solid var(--line-l); background: transparent; cursor: pointer; font-family: var(--f-mono); font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; }
+    .filters button[aria-pressed="true"] { background: var(--basalt); color: var(--foam); border-color: var(--basalt); }
+    .shots { display: grid; gap: 10px; }
+    .shot { display: grid; gap: 20px; padding: 18px; background: #fff; border: 1px solid var(--line-l); }
+    @media (min-width: 980px) { .shot { grid-template-columns: 260px 1fr; } }
+    .shot .slot { width: 100%; max-height: 340px; }
+    .shot .slot__note { left: 14px; right: 14px; bottom: 14px; }
+    .shot .slot__brief { display: none; }
+    .shot__meta { display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; margin-bottom: 10px; }
+    .shot__id { font-variation-settings: 'wdth' 125; font-weight: 800; font-size: 22px; letter-spacing: -0.02em; margin-right: 8px; }
+    .chip { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .05em; text-transform: uppercase; padding: 3px 8px; border-radius: 99px; border: 1px solid var(--line-l); }
+    .chip--ready { background: var(--lichen); border-color: var(--lichen); }
+    .chip--pending { background: rgba(232,119,46,.14); border-color: transparent; color: #a3470c; }
+    .shot__brief { margin: 0 0 6px; font-size: 15px; }
+    .shot__used { margin: 0 0 12px; font-size: 13px; color: var(--slate); }
+    .shot__file { margin: 0 0 12px; font-size: 13px; }
+    .shot pre { margin: 0; white-space: pre-wrap; word-break: break-word; max-height: 168px; overflow: auto; padding: 14px; background: var(--foam); border: 1px solid var(--line-l); line-height: 1.6; }
+    .shot__actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .shot__actions button { min-height: 36px; padding: 0 14px; border-radius: 99px; border: 1px solid var(--basalt); background: transparent; cursor: pointer; font-family: var(--f-mono); font-size: 11px; letter-spacing: .04em; }
+    .shot__actions button:first-child { background: var(--basalt); color: var(--foam); }
+    .shot__actions button.done { background: var(--lichen); color: var(--basalt); border-color: var(--lichen); }
+    .back { font-family: var(--f-mono); font-size: 12px; }
+  </style>
+</head>
+<body>
+  <main class="sheet wrap">
+    <header class="sheet__head">
+      <a class="back" href="index.html">← Back to the site</a>
+      <div class="sheet__title"><span class="brand__mark" data-mark></span><h1>Holdfast shot sheet</h1></div>
+      <p class="body">Every image, scroll film and 3D model the site uses, with the exact prompt. Until each exists the site shows a designed stand-in: a labelled placeholder, a storyboard that plays as you scroll, or a 3D shoe drawn in code. Generating them is the only step left.</p>
+      <div class="stats" data-stats></div>
+      <div class="routes">
+        <section class="route">
+          <h2>Automatic (Higgsfield CLI)</h2>
+          <ol>
+            <li>See the plan, cost and balance: <code>node higgsfield/generate.mjs</code></li>
+            <li>Generate everything: <code>node higgsfield/generate.mjs --go</code></li>
+            <li>Reload the site. Images appear in their slots.</li>
+          </ol>
+        </section>
+        <section class="route">
+          <h2>By hand (Higgsfield app)</h2>
+          <ol>
+            <li>Make the four <b>stage 1</b> <code>-side</code> masters first. They define each shoe.</li>
+            <li>For each shot: copy the prompt, pick the model and aspect shown, and for stage 2 attach the master named under “Reference”.</li>
+            <li>Download, save as <code>higgsfield/renders/&lt;id&gt;.png</code>, then run <code>node higgsfield/optimize.mjs</code>.</li>
+          </ol>
+        </section>
+      </div>
+      <details class="look">
+        <summary>Look bible: the strings pasted into every prompt</summary>
+        <dl data-look></dl>
+      </details>
+    </header>
+
+    <div class="filters" role="group" aria-label="Filter shots" data-filters>
+      <button type="button" data-f="all" aria-pressed="true">All</button>
+      <button type="button" data-f="pending" aria-pressed="false">Pending</button>
+      <button type="button" data-f="ready" aria-pressed="false">Ready</button>
+      <button type="button" data-f="1" aria-pressed="false">Stage 1</button>
+      <button type="button" data-f="2" aria-pressed="false">Stage 2</button>
+      <button type="button" data-f="3" aria-pressed="false">Stage 3 · film frames + 3D</button>
+      <button type="button" data-f="4" aria-pressed="false">Stage 4 · press end frame</button>
+      <button type="button" data-f="5" aria-pressed="false">Stage 5 · films</button>
+    </div>
+    <div class="shots" data-shots></div>
+  </main>
+  <div class="toast" role="status" aria-live="polite" data-toast></div>
+
+  <script src="js/shots.js"></script>
+  <script src="assets/img/ready.js"></script>
+  <script src="js/soles.js"></script>
+  <script src="js/media.js"></script>
+  <script>
+    (function () {
+      var S = window.HOLDFAST_SHOTS, M = window.HF_MEDIA;
+      /* credit prices quoted by `hf generate cost` on 2026-11-20 */
+      var PRICE = { gpt_image_2_6: 2.75, soul_cinematic: 0.12, tripo_h3_1_image_to_3d: 9, kling4_0: 0 };
+      var MODEL = { gpt_image_2_6: 'GPT Image 2.6 · 2K · high', soul_cinematic: 'Soul Cinematic · 2K', tripo_h3_1_image_to_3d: 'Tripo H3.1 · image to 3D', kling4_0: 'Kling 4.0 · 1080p · start + end frame' };
+      var READY = window.HOLDFAST_READY || {};
+      var priceOf = function (s) { return s.model === 'kling4_0' ? (s.params.duration === 10 ? 37.5 : 18.75) : PRICE[s.model]; };
+      var isReady = function (s) {
+        if (s.kind === 'film') return !!(READY.film || {})[s.name];
+        if (s.kind === 'model3d') return (READY.model3d || []).indexOf(s.model_of) > -1;
+        return M.ready(s.id);
+      };
+      var KIND = { film: 'Scroll film', model3d: '3D model' };
+      var esc = function (t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+      document.querySelectorAll('[data-mark]').forEach(function (el) { el.innerHTML = window.HF_ART.mark(); });
+
+      var ready = S.all.filter(isReady).length;
+      var cost = S.all.filter(function (s) { return !isReady(s); }).reduce(function (a, s) { return a + priceOf(s); }, 0);
+      document.querySelector('[data-stats]').innerHTML =
+        '<span class="stat"><b>' + S.shots.length + '</b>images</span>' +
+        '<span class="stat"><b>' + S.models3d.length + '</b>3D models</span>' +
+        '<span class="stat"><b>' + S.films.length + '</b>scroll films</span>' +
+        '<span class="stat"><b>' + ready + '</b>ready</span>' +
+        '<span class="stat"><b>≈' + cost.toFixed(1) + '</b>credits to finish</span>';
+
+      document.querySelector('[data-look]').innerHTML = Object.keys(S.look).map(function (k) {
+        return '<div><dt>' + k + '</dt><dd>' + esc(S.look[k]) + '</dd></div>';
+      }).join('');
+
+      var cli = function (s) {
+        var a = ['hf generate create', s.model];
+        if (s.kind !== 'model3d') a.push('--prompt "' + s.prompt.replace(/"/g, '\\"') + '"', '--aspect_ratio ' + s.aspect);
+        Object.keys(s.params).forEach(function (k) { a.push('--' + k + ' ' + s.params[k]); });
+        if (s.kind === 'film') a.push('--start-image higgsfield/renders/' + s.start + '.png', '--end-image higgsfield/renders/' + s.end + '.png');
+        (s.refs || []).forEach(function (r) { a.push('--image ' + r); });
+        return a.join(' ') + ' --wait';
+      };
+      var EXT = { film: 'mp4', model3d: 'glb' };
+
+      var list = document.querySelector('[data-shots]');
+      list.innerHTML = S.all.map(function (s) {
+        var ok = isReady(s);
+        /* films show their start frame, 3D models the master they are made from */
+        var thumb = s.kind === 'film' ? s.start : s.kind === 'model3d' ? s.model_of + '-side' : s.id;
+        var inputs = s.kind === 'film' ? ['higgsfield/renders/' + s.start + '.png (start)', 'higgsfield/renders/' + s.end + '.png (end)'] : s.refs;
+        return '<article class="shot" data-stage="' + s.stage + '" data-state="' + (ok ? 'ready' : 'pending') + '">' +
+          '<figure class="slot" data-shot="' + thumb + '" data-sizes="260px"></figure>' +
+          '<div>' +
+          '<div class="shot__meta"><span class="shot__id">' + s.id + '</span>' +
+          '<span class="chip ' + (ok ? 'chip--ready' : 'chip--pending') + '">' + (ok ? 'Ready' : 'Pending') + '</span>' +
+          (KIND[s.kind] ? '<span class="chip">' + KIND[s.kind] + '</span>' : '') +
+          '<span class="chip">Stage ' + s.stage + '</span><span class="chip">' + MODEL[s.model] + '</span>' +
+          (s.kind === 'film' ? '<span class="chip">' + s.params.duration + ' s</span>' : '') +
+          (s.kind !== 'model3d' ? '<span class="chip">' + s.aspect + '</span>' : '') +
+          '<span class="chip">' + priceOf(s) + ' cr</span></div>' +
+          '<p class="shot__brief">' + esc(s.brief) + '</p>' +
+          '<p class="shot__used">Used on: ' + esc(s.used.join(' · ')) + '</p>' +
+          (inputs ? '<p class="shot__file">' + (s.kind === 'film' ? 'Frames' : 'Reference') + ': <code>' + inputs.join('</code> <code>') + '</code></p>' : '') +
+          '<p class="shot__file">Save as: <code>higgsfield/renders/' + s.id + '.' + (EXT[s.kind] || 'png') + '</code></p>' +
+          '<pre>' + esc(s.prompt) + '</pre>' +
+          '<div class="shot__actions"><button type="button" data-copy="prompt" data-id="' + s.id + '">Copy prompt</button><button type="button" data-copy="cli" data-id="' + s.id + '">Copy CLI command</button></div>' +
+          '</div></article>';
+      }).join('');
+      M.all(list);
+
+      list.addEventListener('click', function (e) {
+        var b = e.target.closest('[data-copy]');
+        if (!b) return;
+        var s = S.byId[b.dataset.id];
+        var text = b.dataset.copy === 'cli' ? cli(s) : s.prompt;
+        var done = function () { var t = b.textContent; b.textContent = 'Copied'; b.classList.add('done'); setTimeout(function () { b.textContent = t; b.classList.remove('done'); }, 1400); };
+        if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, function () { window.prompt('Copy:', text); });
+        else window.prompt('Copy:', text);
+      });
+
+      document.querySelector('[data-filters]').addEventListener('click', function (e) {
+        var b = e.target.closest('[data-f]');
+        if (!b) return;
+        this.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+        var f = b.dataset.f;
+        list.querySelectorAll('.shot').forEach(function (el) {
+          el.hidden = !(f === 'all' || el.dataset.state === f || el.dataset.stage === f);
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

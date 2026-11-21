@@ -1,0 +1,19 @@
+{
+  "name": "holdfast",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Holdfast: shoes that don't let go. Concept brand site, plain HTML/CSS/JS, images from Higgsfield.",
+  "scripts": {
+    "serve": "node tools/serve.mjs",
+    "plan": "node higgsfield/generate.mjs",
+    "generate": "node higgsfield/generate.mjs --go",
+    "images": "node higgsfield/optimize.mjs"
+  },
+  "devDependencies": {
+    "@gltf-transform/cli": "^4.5.1",
+    "esbuild": "^0.28.2",
+    "lenis": "^1.3.27",
+    "sharp": "^0.35.5",
+    "three": "^0.187.0"
+  }
+}

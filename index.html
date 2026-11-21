@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Holdfast · Shoes that don’t let go</title>
+  <meta name="description" content="Holdfast makes shoes built on the grip of things that hold on for a living: kelp, geckos, octopus and limpets.">
+  <meta name="theme-color" content="#0E1110">
+  <meta property="og:title" content="Holdfast · Shoes that don’t let go">
+  <meta property="og:description" content="Four shoes, four animals that never slip.">
+  <meta property="og:image" content="assets/img/og.jpg">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=Martian+Mono:wdth,wght@75..112.5,300..700&display=swap">
+  <link rel="stylesheet" href="css/holdfast.css">
+  <script src="js/motion.js"></script>
+</head>
+<body class="page-home">
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="nav" data-nav>
+    <a class="brand" href="index.html" aria-label="Holdfast, home"><span class="brand__mark" data-mark></span><span class="brand__word">Holdfast</span></a>
+    <nav class="nav__links" aria-label="Main">
+      <a href="#shoes">Shoes</a>
+      <a href="#lab">Grip Lab</a>
+      <a href="#field">Field</a>
+      <a href="#story">Story</a>
+    </nav>
+    <div class="nav__end">
+      <button class="nav__motion" type="button" data-motion-toggle aria-pressed="false" aria-label="Reduce motion"><span class="nav__motion-dot" aria-hidden="true"></span><span class="nav__motion-label">Motion on</span></button>
+      <button class="nav__bag" type="button" data-bag aria-label="Bag, 0 items">Bag <span class="nav__count" data-bag-count>0</span></button>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ───────────── HERO: a film you play by scrolling ───────────── -->
+    <section class="film film--hero" id="top" data-film="hero" data-focus="0.86" data-gauge="The hold" style="--len:300" aria-labelledby="hero-title">
+      <div class="film__stage">
+        <figure class="slot slot--fill film__still" data-shot="hero" data-shot-m="hero-m" data-focus="86% 50%"></figure>
+        <figure class="slot slot--fill film__still film__still--end" data-shot="hero-end" data-shot-m="hero-m-end" data-focus="86% 50%"></figure>
+        <canvas class="film__canvas" aria-hidden="true"></canvas>
+        <div class="film__scrim" aria-hidden="true"></div>
+
+        <div class="chap chap--intro wrap" data-in="0" data-out="0.22">
+          <p class="eyebrow">Coastal trail · Wet city · Water · Rock</p>
+          <h1 class="hero__title" id="hero-title"><span class="skid">Don’t</span> <span class="skid">let</span> <span class="skid">go.</span></h1>
+          <p class="hero__lede">Shoes built on the grip of things that hold on for a living: kelp, geckos, octopus and limpets.</p>
+          <div class="hero__cta">
+            <a class="btn btn--lichen" href="#shoes">Shop the four</a>
+            <a class="btn btn--ghost" href="#lab">See how they grip</a>
+          </div>
+        </div>
+        <div class="chap chap--beat wrap" data-in="0.3" data-out="0.6">
+          <p class="chap__big">The wave hits.</p>
+          <p class="chap__small">Wet basalt in a full surge: the worst footing on the coast.</p>
+        </div>
+        <div class="chap chap--beat wrap" data-in="0.68" data-out="1">
+          <p class="chap__big">The shoe stays.</p>
+          <p class="chap__small">Kelp · coastal trail runner · $165</p>
+          <a class="btn btn--lichen" href="shoe.html?m=kelp">Shop the Kelp</a>
+        </div>
+
+        <div class="film__hud wrap" aria-hidden="true">
+          <div class="film__row"><span class="film__tag"></span><span class="film__beat"></span></div>
+          <div class="film__row">
+            <span class="film__fig">Fig. 01 · Kelp on wet basalt</span>
+            <div class="film__track"><div class="film__bar"><i></i></div><div class="film__ticks"></div></div>
+            <span class="film__tc">00:00.0 / 00:10.0</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────── 01 STORY ───────────── -->
+    <section class="story" id="story" data-gauge="Story" aria-labelledby="story-title">
+      <div class="wrap story__grid">
+        <div class="story__text">
+          <p class="label rv"><span>01</span> The holdfast</p>
+          <h2 class="h2 rv" id="story-title">Kelp has no roots. It holds on anyway.</h2>
+          <p class="body-l rv">A strand of kelp grips bare rock with a holdfast: a clenched knot of fingers that grows into every crack and spreads the pull of each wave across hundreds of small contact points. Winter storms roll boulders along the sea floor. The kelp stays.</p>
+          <p class="body-l rv">We studied the things that refuse to slip, then put them underfoot. Four animals, four soles, one rule for every shoe we make.</p>
+          <p class="story__rule rv">Grip first. Everything else second.</p>
+        </div>
+        <figure class="slot story__media rv-clip" data-shot="story-surge" data-sizes="(max-width: 900px) 100vw, 40vw"></figure>
+      </div>
+    </section>
+
+    <!-- ───────────── 02 PRESS: the macro film ───────────── -->
+    <section class="film film--press" id="press" data-film="press" data-focus="0.8" data-gauge="The press" style="--len:260" aria-labelledby="press-title">
+      <div class="film__stage">
+        <figure class="slot slot--fill film__still" data-shot="press-start" data-focus="80% 50%"></figure>
+        <figure class="slot slot--fill film__still film__still--end" data-shot="press-end" data-focus="80% 50%"></figure>
+        <canvas class="film__canvas" aria-hidden="true"></canvas>
+        <div class="film__scrim film__scrim--side" aria-hidden="true"></div>
+
+        <div class="chap chap--side wrap" data-in="0" data-out="0.3">
+          <p class="label"><span>02</span> Watch it hold</p>
+          <h2 class="h2" id="press-title">Grip is decided the moment you land.</h2>
+        </div>
+        <div class="chap chap--side wrap" data-in="0.34" data-out="0.64">
+          <p class="chap__big">Water has to go somewhere.</p>
+          <p class="chap__small">On wet rock the enemy is the thin film of water between rubber and stone.</p>
+        </div>
+        <div class="chap chap--side wrap" data-in="0.7" data-out="1">
+          <p class="chap__big">The lugs give it a way out.</p>
+          <p class="chap__small">Branching channels push the water sideways, so the rubber touches rock.</p>
+        </div>
+
+        <div class="film__hud wrap" aria-hidden="true">
+          <div class="film__row"><span class="film__tag"></span><span class="film__beat"></span></div>
+          <div class="film__row">
+            <span class="film__fig">Fig. 02 · Kelp outsole, macro</span>
+            <div class="film__track"><div class="film__bar"><i></i></div><div class="film__ticks"></div></div>
+            <span class="film__tc">00:00.0 / 00:05.0</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="band" aria-hidden="true">
+      <div class="band__track">
+        <span>Wet rock</span><i data-mark></i><span>Wet steel</span><i data-mark></i><span>Wet tile</span><i data-mark></i><span>Wet weed</span><i data-mark></i><span>Wet everything</span><i data-mark></i>
+        <span>Wet rock</span><i data-mark></i><span>Wet steel</span><i data-mark></i><span>Wet tile</span><i data-mark></i><span>Wet weed</span><i data-mark></i><span>Wet everything</span><i data-mark></i>
+      </div>
+    </div>
+
+    <!-- ───────────── 03 SHOES ───────────── -->
+    <section class="shoes" id="shoes" data-gauge="The range" aria-labelledby="shoes-title">
+      <div class="wrap">
+        <header class="sec-head">
+          <p class="label rv"><span>03</span> The range</p>
+          <h2 class="h2 rv" id="shoes-title">Four ways to hold.</h2>
+          <p class="body-l sec-head__aside rv">One shoe for each surface that usually puts you on the ground. Each sole is copied from an animal that lives there.</p>
+        </header>
+        <div class="cards" data-cards></div>
+      </div>
+    </section>
+
+    <!-- the tide comes in: a wave edge that rolls as you scroll into the light section -->
+    <div class="tide tide--in" aria-hidden="true" data-tide><svg viewBox="0 0 1440 140" preserveAspectRatio="none"><path/></svg></div>
+
+    <!-- ───────────── 04 GRIP LAB ───────────── -->
+    <section class="lab" id="lab" data-gauge="Grip Lab" data-light aria-labelledby="lab-title">
+      <div class="wrap">
+        <header class="sec-head">
+          <p class="label rv"><span>04</span> Grip Lab</p>
+          <h2 class="h2 rv" id="lab-title">Four animals that never slip.</h2>
+          <p class="body-l sec-head__aside rv">Pick one to see how it holds, and the tread we drew from it.</p>
+        </header>
+
+        <div class="lab__tabs" role="tablist" aria-label="Choose an animal" data-lab-tabs></div>
+        <div class="lab__stage" data-lab-stage>
+          <figure class="slot lab__nature" data-lab-nature data-sizes="(max-width: 900px) 100vw, 30vw"></figure>
+          <div class="lab__sole" data-lab-sole></div>
+          <div class="lab__text" role="tabpanel" data-lab-text aria-live="polite"></div>
+        </div>
+
+        <div class="ramp" data-ramp>
+          <div class="ramp__head">
+            <h3 class="h3">The ramp test</h3>
+            <p class="body">A shoe on a slope starts to slide when the slope gets steeper than its grip allows. Tilt the wet granite and watch which one lets go first.</p>
+          </div>
+          <div class="ramp__rig">
+            <svg class="ramp__svg" viewBox="0 0 800 380" role="img" aria-labelledby="ramp-desc" data-ramp-svg>
+              <desc id="ramp-desc">Two shoes on a tilting wet granite ramp. The ordinary sole slides off first; the Holdfast sole holds to a much steeper angle.</desc>
+            </svg>
+            <div class="ramp__readout" aria-live="polite" data-ramp-readout></div>
+          </div>
+          <div class="ramp__controls">
+            <label class="ramp__label" for="ramp-angle">Slope <output data-ramp-out>0°</output></label>
+            <input class="ramp__range" id="ramp-angle" type="range" min="0" max="45" step="1" value="0" data-ramp-input>
+            <div class="ramp__pick" role="radiogroup" aria-label="Holdfast shoe on the ramp" data-ramp-pick></div>
+          </div>
+          <p class="ramp__note">Prototype targets on wet granite. Final figures will come from independent lab testing.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- the tide goes out -->
+    <div class="tide tide--out" aria-hidden="true" data-tide><svg viewBox="0 0 1440 140" preserveAspectRatio="none"><path/></svg></div>
+
+    <!-- ───────────── 05 THE KELP IN 3D, TAKEN APART BY SCROLLING ───────────── -->
+    <section class="explode" id="anatomy" data-explode data-gauge="Taken apart" style="--len:440" aria-labelledby="explode-title">
+      <div class="explode__pin">
+        <div class="wrap explode__grid">
+          <div class="explode__copy">
+            <p class="label"><span>05</span> Up close</p>
+            <h2 class="h2" id="explode-title">The Kelp, taken apart.</h2>
+            <ol class="explode__steps" data-steps></ol>
+            <a class="btn btn--lichen" href="shoe.html?m=kelp">Shop the Kelp · $165</a>
+          </div>
+          <div class="explode__view">
+            <canvas class="explode__canvas" data-3d role="img" aria-label="A 3D Kelp shoe that comes apart into outsole, midsole, footbed and upper as you scroll."></canvas>
+            <div class="explode__fallback" data-3d-fallback></div>
+            <div class="explode__hud" aria-hidden="true"><span>Real-time 3D · drag to turn</span><span data-step-n>00 / 05</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────── 06 FIELD ───────────── -->
+    <section class="field" id="field" data-gauge="Field" aria-labelledby="field-title" data-field>
+      <div class="field__pin">
+        <header class="field__head wrap">
+          <p class="label"><span>06</span> In the field</p>
+          <h2 class="h2" id="field-title">Wherever it’s wet.</h2>
+        </header>
+        <div class="field__track" data-field-track></div>
+        <div class="field__progress wrap" aria-hidden="true"><span data-field-bar></span></div>
+      </div>
+    </section>
+
+    <!-- ───────────── CLOSING ───────────── -->
+    <section class="closing" id="join" data-gauge="Sign up" aria-labelledby="closing-title">
+      <figure class="slot slot--fill closing__media" data-shot="closing" data-focus="70% 50%"></figure>
+      <div class="closing__scrim" aria-hidden="true"></div>
+      <div class="wrap closing__copy">
+        <h2 class="display rv" id="closing-title">Stand your ground.</h2>
+        <form class="signup rv" data-signup novalidate>
+          <label class="signup__label" for="email">New shoes and field tests, about once a month.</label>
+          <div class="signup__row">
+            <input class="signup__input" id="email" type="email" name="email" autocomplete="email" placeholder="you@example.com" required>
+            <button class="btn btn--lichen" type="submit">Sign up</button>
+          </div>
+          <p class="signup__msg" data-signup-msg aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot__grid">
+      <div class="foot__brand"><span class="foot__mark" data-mark></span><p class="foot__word">Holdfast</p></div>
+      <nav class="foot__col" aria-label="Shoes">
+        <p class="foot__h">Shoes</p>
+        <a href="shoe.html?m=kelp">Kelp</a><a href="shoe.html?m=gecko">Gecko</a><a href="shoe.html?m=octo">Octo</a><a href="shoe.html?m=limpet">Limpet</a>
+      </nav>
+      <nav class="foot__col" aria-label="Brand">
+        <p class="foot__h">Holdfast</p>
+        <a href="#story">Story</a><a href="#lab">Grip Lab</a><a href="#field">Field</a>
+      </nav>
+      <div class="foot__col">
+        <p class="foot__h">Help</p>
+        <span>Sizing</span><span>Returns</span><span>Repairs</span>
+      </div>
+    </div>
+    <div class="wrap foot__base">
+      <p>Concept brand. Imagery made with Higgsfield; every person shown is generated.</p>
+    </div>
+  </footer>
+
+  <nav class="gauge" aria-label="Sections" data-gauge-nav></nav>
+  <div class="toast" role="status" aria-live="polite" data-toast></div>
+
+  <script src="assets/vendor/lenis.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/shots.js"></script>
+  <script src="assets/img/ready.js"></script>
+  <script src="js/soles.js"></script>
+  <script src="js/media.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/film.js"></script>
+  <script src="js/home.js"></script>
+</body>
+</html>
