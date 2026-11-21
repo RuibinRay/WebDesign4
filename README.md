@@ -19,6 +19,7 @@ Concept shoe brand. The brief was “Grip, or a better name.” **Holdfast** kee
 |---|---|---|---|
 | **Hero film** | A 300 svh section pins the screen; scrolling plays a 10 s film forward and back. Copy “chapters” fade in at set moments (“Don’t let go.” → “The wave hits.” → “The shoe stays.”). A film HUD shows the timeline, beats and timecode. Portrait phones play their own film, shot vertically (`film-hero-m`), so the whole shoe stays in frame. | The storyboard plays: the HUD reads out each beat as you scroll | Frames drawn on a canvas; with only the start and end stills, a slow push-in crossfade |
 | **Press film** | Same engine, 5 s macro: the sole lands and squeezes the water out | Storyboard | Frames |
+| **04 Grip Lab** | Pinned, four chapters (one per animal, about 115 svh each). Within a chapter, scroll plays that animal's 5 s film (kelp holdfast in a surge, gecko toes flattening on glass, octopus suckers sealing, limpets under a wash) while that shoe's tread draws itself line by line. The tabs are progress bars; clicking one (or using the arrow keys) jumps to that animal. On phones the text switches from "how it holds" to "how the sole copies it" halfway through. Frames come from `assets/film/lab-<id>/d` through `HF_SEQ` in `js/film.js`. | The nature photo with a slow push-in | Frames |
 | **3D Kelp, taken apart** | A real-time three.js shoe built from the same tread data as the drawings: lugs, ribbed midsole with toe spring, footbed, knit upper with laces and heel loop. Scrolling turns it and explodes it layer by layer, one step per feature. Stop between steps and it settles onto the nearest one; arrow keys step through; drag to turn it at any step, and it eases back when you let go. | Works fully | Same (it is drawn, not generated) |
 | **3D on the shoe page** | Drag to turn; Turn / Side / Sole / Apart buttons. Leads the gallery until the photos exist. | Drawn 3D shoe in that model’s colours and tread | A textured Tripo 3D model from Higgsfield, if made |
 | **Page transitions** | View Transitions API: the shoe image and name morph from the home card (or the “other shoes” row) into the shoe page; the rest of the page skids in | Works | Works |
@@ -37,7 +38,7 @@ Concept shoe brand. The brief was “Grip, or a better name.” **Holdfast** kee
 
 ## Generated on Higgsfield (2026-11-20)
 
-**All 35 assets are made, reviewed and live:** 28 images, 4 textured 3D models and 3 scroll films (hero, its vertical phone version, press), for about **178.5 credits** (GPT Image 2.6 was 2.00 a shot that evening, not the 2.75 first quoted). Nothing on the site is a placeholder any more; `shots.html` reads 35 of 35 ready.
+**All 39 assets are made, reviewed and live:** 28 images, 4 textured 3D models and 7 scroll films (hero, its vertical phone version, press, and the four Grip Lab animal films), for about **253.5 credits** (GPT Image 2.6 was 2.00 a shot that evening, not the 2.75 first quoted). The four Grip Lab films (75 credits) start from the nature photos, with no end frame, and keep their 3:4 shape (`aspect: 'auto'`); all four were right on the first roll. Nothing on the site is a placeholder any more; `shots.html` reads 39 of 39 ready.
 
 | Stage | What | Model |
 |---|---|---|

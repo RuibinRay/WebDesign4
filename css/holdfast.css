@@ -354,13 +354,29 @@ html.reduce .sole--draw .t { stroke-dashoffset: 0; transition: none; }
 .lab__tab:hover { border-color: var(--basalt); }
 .lab__tab[aria-selected='true'] { background: var(--basalt); color: var(--foam); border-color: var(--basalt); }
 .lab__tab[aria-selected='true'] small { color: var(--lichen); }
-.lab__stage { display: grid; gap: 6px; }
-.lab__nature { min-height: 100%; }
+/* pinned scroll scene: one chapter per animal (about 115 svh each), the stage holds for the whole run */
+.labscroll { position: relative; height: calc(var(--lab-len, 560) * 1svh); margin-top: clamp(8px, 2vw, 24px); }
+.labscroll__pin { position: sticky; top: 0; height: 100svh; display: grid; grid-template-rows: minmax(0, 1fr); align-items: stretch; padding-block: calc(var(--nav-h) + 8px) 16px; overflow: hidden; }
+.labscroll__inner { display: grid; gap: 10px; height: 100%; min-height: 0; grid-template-rows: auto minmax(0, 1fr); }
+.lab__bar { display: block; width: 100%; height: 2px; margin-top: 8px; background: var(--line-l); overflow: hidden; }
+.lab__bar b { display: block; height: 100%; background: var(--basalt); transform-origin: left; transform: scaleX(var(--fill, 0)); }
+.lab__tab[aria-selected='true'] .lab__bar { background: rgba(237, 239, 232, 0.2); }
+.lab__tab[aria-selected='true'] .lab__bar b { background: var(--lichen); }
+.lab__stage { display: grid; gap: 6px; min-height: 0; grid-template-rows: minmax(0, 1fr); overflow: hidden; }
+.lab__media { position: relative; overflow: hidden; background: var(--basalt); min-height: 0; }
+.lab__nature { transform-origin: 50% 60%; }
+.lab__canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.4s; }
+.lab__stage.has-frame .lab__canvas { opacity: 1; }
+.lab__clock { position: absolute; left: 14px; bottom: 12px; z-index: 2; padding: 4px 8px; border-radius: 99px; background: rgba(14, 17, 16, 0.6); color: var(--foam); font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.06em; font-variant-numeric: tabular-nums; }
+.lab__stage:not(.has-film) .lab__clock { display: none; }
 .lab__sole {
   display: grid; place-items: center; background: var(--basalt); color: var(--lab-accent, var(--lichen));
-  padding: clamp(24px, 3vw, 44px); min-height: 420px; position: relative; overflow: hidden;
+  padding: clamp(18px, 2.4vw, 36px); min-height: 0; position: relative; overflow: hidden;
 }
-.lab__sole svg { height: min(56vh, 520px); width: auto; }
+.lab__sole svg { height: 100%; max-height: 100%; width: auto; }
+/* the tread is drawn by scroll: --draw goes 1 → 0 across the chapter */
+.sole--scrub .t { stroke-dasharray: 1; stroke-dashoffset: var(--draw, 0); }
+.sole--scrub .t.f { fill-opacity: calc(1 - var(--draw, 0)); }
 .lab__sole-tag { position: absolute; left: 18px; top: 16px; font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mist); }
 .lab__text { display: grid; align-content: space-between; gap: 28px; padding: clamp(22px, 2.6vw, 36px); border: 1px solid var(--line-l); }
 .lab__text h3 { margin-bottom: 14px; }
@@ -369,14 +385,23 @@ html.reduce .sole--draw .t { stroke-dashoffset: 0; transition: none; }
 .lab__text .step small { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--slate); }
 .lab__text p { margin: 0; font-size: 16px; }
 .lab__text a { font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; }
-@media (min-width: 980px) { .lab__stage { grid-template-columns: 1fr 1fr 1fr; } }
-@media (max-width: 640px) {
-  .lab__tabs { grid-template-columns: 1fr 1fr; }
-  .lab__sole { min-height: 360px; }
-  .lab__sole svg { height: 320px; }
+.lab__text { overflow: hidden; }
+@media (min-width: 980px) { .lab__stage { grid-template-columns: 1.05fr 0.75fr 1fr; } }
+/* below 980: film and tread side by side on top, text below; on phones the text switches halfway through each chapter */
+@media (max-width: 979px) {
+  .lab__stage { grid-template-columns: 3fr 2fr; grid-template-rows: minmax(0, 1fr) auto; }
+  .lab__text { grid-column: 1 / -1; gap: 12px; padding: 16px 18px; align-content: start; }
+  .lab__text .step + .step { padding-top: 0; border-top: 0; }
+  .lab__stage:not(.is-second) .step--sole, .lab__stage.is-second .step--animal { display: none; }
+  .lab__tab { padding: 10px 12px; }
+  .lab__tab small { display: none; }
 }
-.lab__stage.is-swapping .lab__text, .lab__stage.is-swapping .lab__nature { opacity: 0; transform: translateY(8px); }
-.lab__text, .lab__nature { transition: opacity 0.35s, transform 0.5s var(--ease-grip); }
+@media (max-width: 640px) {
+  .lab__tabs { grid-template-columns: repeat(4, 1fr); gap: 4px; }
+  .lab__tab span { font-size: 15px; }
+  .lab__text p { font-size: 14.5px; }
+  .lab__text .label { display: none; }
+}
 
 /* The ramp test */
 .ramp { margin-top: clamp(64px, 8vw, 120px); display: grid; gap: 28px; }

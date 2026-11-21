@@ -391,6 +391,35 @@
     },
   ];
 
+  /* ───────────── STAGE 5: Grip Lab films. Each animal's nature shot comes alive, played by scroll.
+     Start frame only (no end frame): the motion is small and stays on the subject. 'auto' keeps the 3:4 shape. ───────────── */
+  var LAB = {
+    kelp:
+      'Locked-off underwater camera, no cuts. A strong surge of water sweeps across the frame: the kelp stipes bend and stream sideways, ' +
+      'drifting particles rush past, light shafts flicker. The holdfast stays clamped to the boulder, its root-like fingers tightening their grip. Slow, natural motion.',
+    gecko:
+      'Locked-off macro camera through the glass, no cuts. The gecko presses its foot down onto the wet glass: the toes spread, ' +
+      'the fine lamellae on each toe pad flatten against the glass and squeeze the water droplets aside, then hold. Slow, natural motion.',
+    octo:
+      'Locked-off macro camera, no cuts. The octopus arm curls slowly across the wet black rock; one after another its suckers press down onto the stone, ' +
+      'their rims flattening and sealing as they grip. Glistening, slow, natural motion.',
+    limpet:
+      'Locked-off macro camera, no cuts. A wash of seawater pours over the limpets clamped to the wet granite, foaming around the shells and draining off the rock. ' +
+      'The limpets do not move at all. Slow, natural motion.',
+  };
+  MODELS.forEach(function (m) {
+    films.push({
+      id: 'film-lab-' + m, kind: 'film', stage: 5, model: 'kling4_0', aspect: 'auto', frame: '3:4', portrait: true, name: 'lab-' + m, lab: m,
+      params: { mode: 'image-to-video', duration: 5, resolution: '1080p' },
+      start: 'nature-' + m, model_of: m, focus: 0.5,
+      used: ['Home: 04 Grip Lab, played by scrolling'],
+      alt: shots.filter(function (s) { return s.id === 'nature-' + m; })[0].alt,
+      brief: 'The ' + NAMES[m] + ' nature shot comes alive, 5 s: ' + LAB[m].split('. ')[1].toLowerCase(),
+      beats: [{ at: 0, text: 'How the ' + NAMES[m].toLowerCase() + ' holds' }],
+      prompt: LAB[m] + ' No text, no logos.',
+    });
+  });
+
   var all = shots.concat(models3d, films);
   root.HOLDFAST_SHOTS = {
     look: { STUDIO: STUDIO, SHORE: SHORE, CITY: CITY, GRANITE: GRANITE, MACRO: MACRO, MACRO_ROCK: MACRO_ROCK, NEG: NEG, SAME: SAME },

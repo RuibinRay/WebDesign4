@@ -152,6 +152,35 @@
     measure();
   }
 
+  /* A frame sequence on its own, for scenes that draw frames themselves (the Grip Lab):
+     HF_SEQ('lab-kelp/d', 61, onFrame) → { count, start(), nearest(i) → <img> | null }. Coarse frames first. */
+  root.HF_SEQ = function (dir, count, onFrame) {
+    var imgs = [], started = false;
+    function start() {
+      if (started) return;
+      started = true;
+      var order = [], seen = {};
+      [16, 8, 4, 2, 1].forEach(function (step) { for (var i = 0; i < count; i += step) if (!seen[i]) { seen[i] = 1; order.push(i); } });
+      if (!seen[count - 1]) order.push(count - 1);
+      var next = 0, active = 0;
+      (function pump() {
+        while (active < 6 && next < order.length) {
+          var i = order[next++], im = new Image();
+          active++;
+          im.decoding = 'async';
+          im.onload = (function (i, im) { return function () { imgs[i] = im; active--; pump(); if (onFrame) onFrame(i); }; })(i, im);
+          im.onerror = function () { active--; pump(); };
+          im.src = 'assets/film/' + dir + '/' + String(i + 1).padStart(4, '0') + '.webp';
+        }
+      })();
+    }
+    function nearest(i) {
+      for (var d = 0; d < count; d++) { if (imgs[i - d]) return imgs[i - d]; if (imgs[i + d]) return imgs[i + d]; }
+      return null;
+    }
+    return { count: count, start: start, nearest: nearest };
+  };
+
   Array.prototype.forEach.call(document.querySelectorAll('[data-film]'), function (s) {
     if (s.classList.contains('film')) Film(s);
   });

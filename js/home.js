@@ -7,6 +7,7 @@
   var $ = function (s, el) { return (el || document).querySelector(s); };
   var esc = function (t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
   var deg = function (mu) { return Math.atan(mu) * 180 / Math.PI; };
+  var clamp = function (v, a, b) { return Math.max(a, Math.min(b, v)); };
 
   /* ───────────── 03 CARDS (the image and name morph into the shoe page: see View Transitions in the CSS) ───────────── */
   var cards = $('[data-cards]');
@@ -28,53 +29,101 @@
     UI.watch(cards);
   }
 
-  /* ───────────── 03 GRIP LAB ───────────── */
-  var tabs = $('[data-lab-tabs]'), stage = $('[data-lab-stage]');
-  var natureEl = $('[data-lab-nature]'), soleEl = $('[data-lab-sole]'), textEl = $('[data-lab-text]');
-  function showLab(id, focus) {
-    var m = HF.byId[id];
-    Array.prototype.forEach.call(tabs.children, function (t) {
-      var on = t.dataset.id === id;
-      t.setAttribute('aria-selected', String(on));
-      t.tabIndex = on ? 0 : -1;
-      if (on && focus) t.focus();
+  /* ───────────── 04 GRIP LAB: pinned. Scrolling plays each animal's Higgsfield film in turn
+     (assets/film/lab-<id>/d), while that shoe's tread draws itself. One chapter per animal. ───────────── */
+  var labEl = $('[data-labscroll]'), tabs = $('[data-lab-tabs]'), stage = $('[data-lab-stage]');
+  if (labEl && tabs) {
+    var natureEl = $('[data-lab-nature]'), soleEl = $('[data-lab-sole]'), textEl = $('[data-lab-text]');
+    var labCanvas = $('[data-lab-canvas]'), labCtx = labCanvas.getContext('2d'), clock = $('[data-lab-clock]');
+    var LABFILMS = (root.HOLDFAST_READY || {}).film || {};
+    var N = HF.models.length, seqs = {}, chapter = -1, q = 0, soleSvg = null, drawnImg = null;
+    HF.models.forEach(function (m) {
+      var f = LABFILMS['lab-' + m.id];
+      if (f && f.d && root.HF_SEQ) seqs[m.id] = root.HF_SEQ('lab-' + m.id + '/d', f.d, function () { if (HF.models[chapter] === m) paintLab(true); });
     });
-    stage.classList.add('is-swapping');
-    setTimeout(function () {
-      natureEl.setAttribute('data-shot', 'nature-' + id);
-      natureEl.className = 'slot lab__nature';
+
+    tabs.innerHTML = HF.models.map(function (m) {
+      return '<button class="lab__tab" role="tab" id="tab-' + m.id + '" data-id="' + m.id + '" aria-selected="false"><small>' + esc(m.learned.replace('the ', '')) + '</small><span>' + esc(m.name) + '</span><i class="lab__bar" aria-hidden="true"><b></b></i></button>';
+    }).join('');
+
+    var sizeLab = function () {
+      var r = labCanvas.getBoundingClientRect(), dpr = Math.min(root.devicePixelRatio || 1, 2);
+      labCanvas.width = Math.max(1, Math.round(r.width * dpr));
+      labCanvas.height = Math.max(1, Math.round(r.height * dpr));
+      drawnImg = null;
+    };
+    var setChapter = function (i) {
+      if (i === chapter) return;
+      chapter = i;
+      var m = HF.models[i];
+      Array.prototype.forEach.call(tabs.children, function (t, k) { t.setAttribute('aria-selected', String(k === i)); t.tabIndex = k === i ? 0 : -1; });
+      natureEl.setAttribute('data-shot', 'nature-' + m.id);
+      natureEl.className = 'slot slot--fill lab__nature';
       natureEl.removeAttribute('style');
       MEDIA.fill(natureEl);
       textEl.innerHTML =
         '<div><p class="label"><span>' + esc(m.name) + '</span> Learned from ' + esc(m.learned) + '</p></div>' +
-        '<div class="step"><small>How it holds</small><p>' + esc(m.how.animal) + '</p></div>' +
-        '<div class="step"><small>How the sole copies it</small><p>' + esc(m.how.sole) + '</p></div>' +
+        '<div class="step step--animal"><small>How it holds</small><p>' + esc(m.how.animal) + '</p></div>' +
+        '<div class="step step--sole"><small>How the sole copies it</small><p>' + esc(m.how.sole) + '</p></div>' +
         '<a href="shoe.html?m=' + m.id + '">Shop the ' + esc(m.name) + ' · $' + m.price + ' →</a>';
-      textEl.setAttribute('aria-labelledby', 'tab-' + id);
+      textEl.setAttribute('aria-labelledby', 'tab-' + m.id);
       stage.style.setProperty('--lab-accent', m.accent);
-      soleEl.innerHTML = '<span class="lab__sole-tag">Outsole · ' + esc(m.name) + '</span>' + ART.sole(id, { className: 'sole--draw', label: 'The ' + m.name + ' outsole, drawn' });
-      var s = soleEl.querySelector('svg');
-      if (UI.reduce()) s.classList.add('is-drawn');
-      else requestAnimationFrame(function () { requestAnimationFrame(function () { s.classList.add('is-drawn'); }); });
-      stage.classList.remove('is-swapping');
-    }, stage.dataset.ready ? 220 : 0);
-    stage.dataset.ready = '1';
-  }
-  if (tabs) {
-    tabs.innerHTML = HF.models.map(function (m) {
-      return '<button class="lab__tab" role="tab" id="tab-' + m.id + '" data-id="' + m.id + '" aria-selected="false"><small>' + esc(m.learned.replace('the ', '')) + '</small><span>' + esc(m.name) + '</span></button>';
-    }).join('');
-    tabs.addEventListener('click', function (e) { var b = e.target.closest('[data-id]'); if (b) showLab(b.dataset.id); });
+      soleEl.innerHTML = '<span class="lab__sole-tag">Outsole · ' + esc(m.name) + '</span>' + ART.sole(m.id, { className: 'sole--scrub', label: 'The ' + m.name + ' outsole, drawn' });
+      soleSvg = soleEl.querySelector('svg');
+      stage.classList.toggle('has-film', !!seqs[m.id]);
+      stage.classList.remove('has-frame');
+      sizeLab();
+      labCtx.clearRect(0, 0, labCanvas.width, labCanvas.height);
+      if (seqs[m.id]) seqs[m.id].start();
+      var nxt = HF.models[i + 1];
+      if (nxt && seqs[nxt.id]) seqs[nxt.id].start();
+    };
+    var paintLab = function (force) {
+      var m = HF.models[chapter];
+      if (!m) return;
+      /* the tread draws during the first 70% of the chapter, then holds */
+      if (soleSvg) soleSvg.style.setProperty('--draw', (1 - clamp(q / 0.7, 0, 1)).toFixed(3));
+      clock.textContent = '00:0' + (q * 5).toFixed(1) + ' / 00:05.0';
+      var s = seqs[m.id];
+      if (s) {
+        var im = s.nearest(Math.round(q * (s.count - 1)));
+        if (im && (im !== drawnImg || force)) {
+          var W = labCanvas.width, H = labCanvas.height, k = Math.max(W / im.naturalWidth, H / im.naturalHeight);
+          labCtx.drawImage(im, (W - im.naturalWidth * k) / 2, (H - im.naturalHeight * k) / 2, im.naturalWidth * k, im.naturalHeight * k);
+          drawnImg = im;
+          stage.classList.add('has-frame');
+        }
+      } else if (!UI.reduce()) {
+        natureEl.style.transform = 'scale(' + (1 + q * 0.08).toFixed(4) + ')'; /* no film yet: a slow push-in on the still */
+      }
+    };
+    var labUpdate = function () {
+      var r = labEl.getBoundingClientRect(), span = labEl.offsetHeight - window.innerHeight;
+      var x = (span > 0 ? clamp(-r.top / span, 0, 1) : 0) * N;
+      var i = Math.min(N - 1, Math.floor(x));
+      q = clamp(x - i, 0, 1);
+      if (i === N - 1 && x >= N) q = 1;
+      setChapter(i);
+      Array.prototype.forEach.call(tabs.children, function (t, k) { t.style.setProperty('--fill', k < i ? 1 : k === i ? q.toFixed(3) : 0); });
+      stage.classList.toggle('is-second', q > 0.5);
+      paintLab(false);
+    };
+    var labTop = function () { return labEl.getBoundingClientRect().top + window.scrollY; };
+    var goChapter = function (i) {
+      var span = labEl.offsetHeight - window.innerHeight;
+      UI.scrollToY(labTop() + ((i + 0.04) / N) * span);
+    };
+    tabs.addEventListener('click', function (e) { var b = e.target.closest('[data-id]'); if (b) goChapter(Array.prototype.indexOf.call(tabs.children, b)); });
     tabs.addEventListener('keydown', function (e) {
-      var ids = HF.models.map(function (m) { return m.id; });
-      var cur = ids.indexOf(document.activeElement && document.activeElement.dataset.id);
-      if (cur < 0) return;
-      var next = { ArrowRight: cur + 1, ArrowLeft: cur - 1, Home: 0, End: ids.length - 1 }[e.key];
+      var next = { ArrowRight: chapter + 1, ArrowLeft: chapter - 1, Home: 0, End: N - 1 }[e.key];
       if (next === undefined) return;
       e.preventDefault();
-      showLab(ids[(next + ids.length) % ids.length], true);
+      next = (next + N) % N;
+      goChapter(next);
+      tabs.children[next].focus();
     });
-    showLab('kelp');
+    root.addEventListener('resize', function () { sizeLab(); paintLab(true); });
+    UI.onScroll(labUpdate);
   }
 
   /* ───────────── THE RAMP TEST ───────────── */
@@ -203,8 +252,6 @@
       if (bar) bar.style.setProperty('--p', p.toFixed(4));
     });
   }
-
-  var clamp = function (v, a, b) { return Math.max(a, Math.min(b, v)); };
 
   /* ───────────── 05 THE KELP IN 3D: scrolling takes it apart, one layer per step ───────────── */
   var STEPS = [

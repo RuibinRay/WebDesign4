@@ -585,6 +585,78 @@
       "file": "higgsfield/renders/film-hero-m.mp4",
       "seconds": 264,
       "at": "2026-11-21T01:07:28.732Z"
+    },
+    "film-lab-gecko": {
+      "status": "done",
+      "kind": "film",
+      "model": "kling4_0",
+      "params": {
+        "mode": "image-to-video",
+        "duration": 5,
+        "resolution": "1080p"
+      },
+      "aspect": "auto",
+      "inputs": [
+        "nature-gecko"
+      ],
+      "job_id": "62132551-addf-4b25-8fb1-f07ebc1d794c",
+      "file": "higgsfield/renders/film-lab-gecko.mp4",
+      "seconds": 215,
+      "at": "2026-11-21T01:42:48.504Z"
+    },
+    "film-lab-limpet": {
+      "status": "done",
+      "kind": "film",
+      "model": "kling4_0",
+      "params": {
+        "mode": "image-to-video",
+        "duration": 5,
+        "resolution": "1080p"
+      },
+      "aspect": "auto",
+      "inputs": [
+        "nature-limpet"
+      ],
+      "job_id": "e612aace-5503-425a-a121-65a336cae63c",
+      "file": "higgsfield/renders/film-lab-limpet.mp4",
+      "seconds": 264,
+      "at": "2026-11-21T01:43:37.003Z"
+    },
+    "film-lab-kelp": {
+      "status": "done",
+      "kind": "film",
+      "model": "kling4_0",
+      "params": {
+        "mode": "image-to-video",
+        "duration": 5,
+        "resolution": "1080p"
+      },
+      "aspect": "auto",
+      "inputs": [
+        "nature-kelp"
+      ],
+      "job_id": "67fb4412-2d86-455b-b921-8e796fa4a5b2",
+      "file": "higgsfield/renders/film-lab-kelp.mp4",
+      "seconds": 268,
+      "at": "2026-11-21T01:43:40.621Z"
+    },
+    "film-lab-octo": {
+      "status": "done",
+      "kind": "film",
+      "model": "kling4_0",
+      "params": {
+        "mode": "image-to-video",
+        "duration": 5,
+        "resolution": "1080p"
+      },
+      "aspect": "auto",
+      "inputs": [
+        "nature-octo"
+      ],
+      "job_id": "a1dd5b84-f907-4cba-a4dd-d263d87ee3ff",
+      "file": "higgsfield/renders/film-lab-octo.mp4",
+      "seconds": 268,
+      "at": "2026-11-21T01:43:41.099Z"
     }
   }
 }

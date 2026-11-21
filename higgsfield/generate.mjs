@@ -73,7 +73,7 @@ const renderOf = (id) => {
 };
 /* refs are written as higgsfield/renders/<id>.png; accept whatever extension the download had */
 const idOfRef = (ref) => path.basename(ref).replace(/\.[^.]+$/, '');
-const inputsOf = (s) => (kindOf(s) === 'film' ? [s.start, s.end] : (s.refs || []).map(idOfRef));
+const inputsOf = (s) => (kindOf(s) === 'film' ? [s.start, s.end].filter(Boolean) : (s.refs || []).map(idOfRef));
 const paramsOf = (s) => {
   const p = { ...s.params };
   if (s.model === 'gpt_image_2_6') {
@@ -177,8 +177,8 @@ async function runStage(list) {
       writeManifest(manifest);
     }
   };
-  /* Higgsfield runs fewer videos than images at once */
-  const n = list.every((s) => kindOf(s) === 'film') ? Math.min(2, CONCURRENCY) : CONCURRENCY;
+  /* videos at once: 4 on the Ultra plan (Starter allowed 2: set HF_VIDEO_CONCURRENCY=2) */
+  const n = list.every((s) => kindOf(s) === 'film') ? Math.min(Number(process.env.HF_VIDEO_CONCURRENCY || 4), CONCURRENCY) : CONCURRENCY;
   await Promise.all(Array.from({ length: Math.min(n, list.length) }, worker));
 }
 

@@ -138,7 +138,10 @@ for (const f of S.films) {
     /* A landscape film gets a desktop set and a portrait crop for phones; the crop is skipped when the film
        has a vertical counterpart (phoneOf), which phones play instead. A vertical film gets one 720 × 1280 set. */
     const hasPhoneFilm = S.films.some((x) => x.phoneOf === f.name && fs.existsSync(path.join(SRC, `${x.id}.mp4`)));
-    const sets = f.aspect === '9:16'
+    /* portrait films (Grip Lab, 3:4) get one 900 px wide set, the same on every screen */
+    const sets = f.portrait
+      ? [['d', `${pre}scale=900:-2:flags=lanczos,unsharp=5:5:0.35`]]
+      : f.aspect === '9:16'
       ? [['d', `${pre}scale=720:1280:flags=lanczos,unsharp=5:5:0.35`]]
       : [
         ['d', `${pre}scale=1600:-2:flags=lanczos,unsharp=5:5:0.35`],

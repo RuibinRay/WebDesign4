@@ -146,15 +146,29 @@
         <header class="sec-head">
           <p class="label rv"><span>04</span> Grip Lab</p>
           <h2 class="h2 rv" id="lab-title">Four animals that never slip.</h2>
-          <p class="body-l sec-head__aside rv">Pick one to see how it holds, and the tread we drew from it.</p>
+          <p class="body-l sec-head__aside rv">Scroll to watch each one grip, and the tread we drew from it.</p>
         </header>
+      </div>
 
-        <div class="lab__tabs" role="tablist" aria-label="Choose an animal" data-lab-tabs></div>
-        <div class="lab__stage" data-lab-stage>
-          <figure class="slot lab__nature" data-lab-nature data-sizes="(max-width: 900px) 100vw, 30vw"></figure>
-          <div class="lab__sole" data-lab-sole></div>
-          <div class="lab__text" role="tabpanel" data-lab-text aria-live="polite"></div>
+      <!-- pinned: scrolling plays each animal's film in turn while its tread draws itself -->
+      <div class="labscroll" data-labscroll>
+        <div class="labscroll__pin">
+          <div class="wrap labscroll__inner">
+            <div class="lab__tabs" role="tablist" aria-label="Choose an animal" data-lab-tabs></div>
+            <div class="lab__stage" data-lab-stage>
+              <div class="lab__media">
+                <figure class="slot slot--fill lab__nature" data-lab-nature data-sizes="(max-width: 900px) 100vw, 34vw"></figure>
+                <canvas class="lab__canvas" aria-hidden="true" data-lab-canvas></canvas>
+                <span class="lab__clock" aria-hidden="true" data-lab-clock></span>
+              </div>
+              <div class="lab__sole" data-lab-sole></div>
+              <div class="lab__text" role="tabpanel" data-lab-text aria-live="polite"></div>
+            </div>
+          </div>
         </div>
+      </div>
+
+      <div class="wrap">
 
         <div class="ramp" data-ramp>
           <div class="ramp__head">
