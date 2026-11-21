@@ -31,6 +31,13 @@ const U = 0.01; // one SVG unit of the 200 × 500 sole box, in scene units
 const toX = (x) => (x - 100) * U;
 const toZ = (y) => (y - 250) * U;
 
+/* How a shoe is built. Each model's data.js entry can override any of these (its form).
+   rocker: toe spring · ribs / ribH: midsole foam layers · plate: a carbon plate through the midsole
+   ankle: 0 low-cut … 1 high-top · laces: count (0 = laceless) · strap: ankle strap · studs: metal-look soleplate */
+const FORM0 = { rocker: 1, ribs: 6, ribH: 0.06, plate: false, ankle: 0, laces: 5, strap: false, studs: false };
+let F = FORM0;
+const smoothstep = (x) => { const t = Math.min(1, Math.max(0, x)); return t * t * (3 - 2 * t); };
+
 /* toe spring and heel rocker: lift the ends of everything a little */
 function bend(geo) {
   const p = geo.attributes.position;
@@ -38,7 +45,7 @@ function bend(geo) {
     const z = p.getZ(i);
     const toe = Math.max(0, (-z - 1.0) / 1.42);
     const heel = Math.max(0, (z - 1.75) / 0.67);
-    p.setY(i, p.getY(i) + 0.46 * toe * toe + 0.1 * heel * heel);
+    p.setY(i, p.getY(i) + 0.46 * F.rocker * toe * toe + 0.1 * heel * heel);
   }
   p.needsUpdate = true;
   geo.computeVertexNormals();
@@ -69,27 +76,26 @@ function slab(poly, scale, y0, h) {
 /* tread primitives → polylines → one merged geometry of rubber bars */
 function lugs(model, poly) {
   const t = ART.tread(model);
-  const w = t.width * U * 1.05;
-  const h = t.depth * 0.022;
   const lines = [];
   for (const it of t.items) {
     if (it.fine) continue;
+    const w = (it.w || t.width) * U * 1.05, h = (it.d || t.depth) * 0.022;
     if (it.q) {
       const [x0, y0, cx, cy, x1, y1] = it.q, pts = [];
       for (let s = 0; s <= 6; s++) {
         const k = s / 6, u = 1 - k;
         pts.push([u * u * x0 + 2 * u * k * cx + k * k * x1, u * u * y0 + 2 * u * k * cy + k * k * y1]);
       }
-      lines.push({ pts, w });
+      lines.push({ pts, w, h });
     } else if (it.l) {
       const pts = [];
       for (let i = 0; i < it.l.length; i += 2) pts.push([it.l[i], it.l[i + 1]]);
-      lines.push({ pts, w });
+      lines.push({ pts, w, h });
     } else if (it.c) {
       const [cx, cy, r] = it.c, n = r > 5 ? 16 : 10, pts = [];
       const rr = it.fill ? r * 0.55 : r;
       for (let s = 0; s <= n; s++) pts.push([cx + Math.cos((s / n) * Math.PI * 2) * rr, cy + Math.sin((s / n) * Math.PI * 2) * rr]);
-      lines.push({ pts, w: it.fill ? r * U * 1.1 : w });
+      lines.push({ pts, w: it.fill ? r * U * 1.1 : w, h });
     }
   }
   const pos = [];
@@ -102,7 +108,7 @@ function lugs(model, poly) {
       let dx = bx - ax, dz = bz - az;
       const len = Math.hypot(dx, dz) || 1e-6;
       dx /= len; dz /= len;
-      const hw = ln.w / 2, nx = -dz * hw, nz = dx * hw;
+      const hw = ln.w / 2, nx = -dz * hw, nz = dx * hw, h = ln.h;
       const sx = ax - dx * hw, sz = az - dz * hw, ex = bx + dx * hw, ez = bz + dz * hw;
       const t0 = [sx + nx, 0, sz + nz], t1 = [sx - nx, 0, sz - nz], t2 = [ex - nx, 0, ez - nz], t3 = [ex + nx, 0, ez + nz];
       const b0 = [t0[0], -h, t0[2]], b1 = [t1[0], -h, t1[2]], b2 = [t2[0], -h, t2[2]], b3 = [t3[0], -h, t3[2]];
@@ -134,8 +140,11 @@ function upperParts(mat, y0) {
     const [x, y] = poly[ci];
     const X = toX(x) * 0.985, Z = toZ(y) * 0.99;
     const t = (Z + 2.42) / 4.84;
-    const shrink = 0.9 * Math.pow(v, 1.5);
-    return [X * (1 - shrink), y0 + ridge(t) * Math.pow(Math.sin((v * Math.PI) / 2), 0.85), Z * (1 - 0.1 * v * v), t];
+    /* toward the heel, a mid or high cut lifts the collar and keeps the shaft round */
+    const a = F.ankle ? smoothstep((t - 0.4) / 0.34) : 0;
+    const shrink = 0.9 * Math.pow(v, 1.5) * (1 - 0.4 * a * Math.min(1, F.ankle * 1.4));
+    const lift = F.ankle * 1.3 * a * Math.pow(v, 1.1);
+    return [X * (1 - shrink), y0 + ridge(t) * Math.pow(Math.sin((v * Math.PI) / 2), 0.85) + lift, Z * (1 - 0.1 * v * v), t];
   };
   const verts = [], vmax = [];
   for (let c = 0; c < C; c++) {
@@ -184,11 +193,20 @@ function upperParts(mat, y0) {
     }
     return best;
   };
-  for (let k = 0; k < 5; k++) {
-    const z = -1.05 + k * 0.26;
+  const span = 1.04 + 0.42 * F.ankle;
+  for (let k = 0; k < F.laces; k++) {
+    const z = -1.05 + (F.laces > 1 ? (k * span) / (F.laces - 1) : 0);
     const a = at(nearest(z, -1), Math.round(R * 0.86)), b = at(nearest(z, 1), Math.round(R * 0.86));
     const m = a.clone().add(b).multiplyScalar(0.5); m.y += 0.07;
     g.add(new Mesh(new TubeGeometry(new CatmullRomCurve3([a, m, b]), 12, 0.024, 6, false), accent));
+  }
+  /* an ankle strap across the front of a high collar */
+  if (F.strap) {
+    const z = 0.8, row = Math.round(R * 0.6);
+    const a = at(nearest(z, -1), row), b = at(nearest(z, 1), row);
+    const m = at(nearest(0.32, -1), R); m.y += 0.06; m.x = 0;
+    const out = (p, k) => new Vector3(p.x * k, p.y, p.z);
+    g.add(new Mesh(new TubeGeometry(new CatmullRomCurve3([out(a, 1.08), m, out(b, 1.08)]), 32, 0.055, 8, false), accent));
   }
   /* outline point 0 is the centre of the heel, where the heel tab rises */
   const heel = new Mesh(new TorusGeometry(0.11, 0.028, 8, 24), accent);
@@ -230,6 +248,35 @@ const VIEWS = {
 };
 const smooth = (t) => t * t * (3 - 2 * t);
 
+/* one shoe, as four layers that can come apart */
+function buildShoe(model, mat, form) {
+  F = Object.assign({}, FORM0, form || {});
+  const poly = ART.outline(160);
+  const layers = { outsole: new Group(), mid: new Group(), insole: new Group(), upper: new Group() };
+  const mats = [];
+  const M = (o) => { const m = new MeshStandardMaterial(Object.assign({ roughness: 0.7, metalness: 0, transparent: true }, o)); mats.push(m); return m; };
+
+  const rubber = F.studs
+    ? M({ color: mat.sole, roughness: 0.3, metalness: 0.55 })
+    : M({ color: mat.sole, roughness: 0.62, opacity: mat.soleOpacity || 1 });
+  layers.outsole.add(new Mesh(bend(slab(poly, 1, 0, 0.07)), rubber));
+  layers.outsole.add(new Mesh(bend(lugs(model, poly)), rubber));
+
+  const ribs = [];
+  for (let i = 0; i < F.ribs; i++) ribs.push(slab(poly, i % 2 ? 0.972 : 1, 0.07 + i * F.ribH, F.ribH));
+  const top = 0.07 + F.ribs * F.ribH;
+  layers.mid.add(new Mesh(bend(mergeGeometries(ribs)), M({ color: mat.mid, roughness: 0.86 })));
+  /* a carbon plate through the middle of the foam, showing at the sidewall */
+  if (F.plate) layers.mid.add(new Mesh(bend(slab(poly, 1.012, 0.07 + Math.floor(F.ribs / 2) * F.ribH - 0.012, 0.024)), M({ color: mat.plate || '#111', roughness: 0.25, metalness: 0.4 })));
+  layers.insole.add(new Mesh(bend(slab(poly, 0.93, top, 0.035)), M({ color: '#d9dcd3', roughness: 0.95 })));
+  layers.upper.add(upperParts(mat, top + 0.02));
+  layers.upper.traverse((o) => { if (o.material && !mats.includes(o.material)) mats.push(o.material); });
+  const owner = new Map();
+  Object.keys(layers).forEach((n) => layers[n].traverse((o) => { if (o.material) owner.set(o.material, n); }));
+  mats.forEach((m) => { m.userData.base = m.opacity; });
+  return { layers, mats, owner };
+}
+
 export function supported() {
   try {
     const c = document.createElement('canvas');
@@ -266,26 +313,18 @@ export function create(canvas, opts) {
   shadow.position.y = -1.05;
   scene.add(shadow);
 
-  /* build the layers */
-  const poly = ART.outline(160);
-  const layers = { outsole: new Group(), mid: new Group(), insole: new Group(), upper: new Group() };
-  const mats = [];
-  const M = (o) => { const m = new MeshStandardMaterial(Object.assign({ roughness: 0.7, metalness: 0, transparent: true }, o)); mats.push(m); return m; };
-
-  const rubber = M({ color: mat.sole, roughness: 0.62, opacity: mat.soleOpacity || 1 });
-  layers.outsole.add(new Mesh(bend(slab(poly, 1, 0, 0.07)), rubber));
-  layers.outsole.add(new Mesh(bend(lugs(opts.model, poly)), rubber));
-
-  const ribs = [];
-  for (let i = 0; i < 6; i++) ribs.push(slab(poly, i % 2 ? 0.972 : 1, 0.07 + i * 0.06, 0.06));
-  layers.mid.add(new Mesh(bend(mergeGeometries(ribs)), M({ color: mat.mid, roughness: 0.86 })));
-  layers.insole.add(new Mesh(bend(slab(poly, 0.93, 0.43, 0.035)), M({ color: '#d9dcd3', roughness: 0.95 })));
-  layers.upper.add(upperParts(mat, 0.45));
-  layers.upper.traverse((o) => { if (o.material && !mats.includes(o.material)) mats.push(o.material); });
-  Object.values(layers).forEach((g) => shoe.add(g));
-  const owner = new Map();
-  Object.keys(layers).forEach((n) => layers[n].traverse((o) => { if (o.material) owner.set(o.material, n); }));
-  mats.forEach((m) => { m.userData.base = m.opacity; });
+  /* build the layers (again whenever setModel swaps the shoe) */
+  let layers, mats, owner;
+  function install(model, mat, form) {
+    if (layers) Object.values(layers).forEach((g) => {
+      shoe.remove(g);
+      g.traverse((o) => { if (o.geometry) o.geometry.dispose(); if (o.material) o.material.dispose(); });
+    });
+    const b = buildShoe(model, mat, form);
+    layers = b.layers; mats = b.mats; owner = b.owner;
+    Object.values(layers).forEach((g) => shoe.add(g));
+  }
+  install(opts.model, mat, opts.form);
 
   /* optional: a Higgsfield image-to-3D model replaces the drawn shoe in viewer mode */
   let glb = null;
@@ -311,7 +350,7 @@ export function create(canvas, opts) {
   const cur = { rx: K[0].rx, ry: K[0].ry, e: 0 };
   const tgt = { ...cur };
   let focus = null, visible = true, dirty = true, raf = 0, last = performance.now();
-  let drag = null, idleSpin = opts.mode === 'viewer', spinT = 0;
+  let drag = null, idleSpin = opts.mode === 'viewer', spinT = 0, swap = 0;
   const grab = { rx: 0, ry: 0 };
 
   function resize() {
@@ -343,7 +382,11 @@ export function create(canvas, opts) {
       const back = Math.exp(-dt * 2.6);
       grab.rx *= back; grab.ry *= back; moving = true;
     }
-    pivot.rotation.set(cur.rx + grab.rx, cur.ry + grab.ry, 0, 'XYZ');
+    /* a new shoe drops in with a quarter turn */
+    if (swap > 0.001) { swap *= Math.exp(-dt * 5.5); moving = true; } else swap = 0;
+    shoe.position.y = -0.6 + 0.9 * swap * swap;
+    shoe.scale.setScalar(1 - 0.18 * swap);
+    pivot.rotation.set(cur.rx + grab.rx, cur.ry + grab.ry - 1.1 * swap, 0, 'XYZ');
     const e = cur.e;
     layers.outsole.position.y = -0.95 * e;
     layers.mid.position.y = -0.22 * e;
@@ -416,6 +459,9 @@ export function create(canvas, opts) {
       wake();
     },
     spin(on) { idleSpin = on; wake(); },
+    /* stage mode: the page sets the pose from scroll, and swaps the shoe per chapter */
+    setPose(rx, ry, e) { tgt.rx = rx; tgt.ry = ry; tgt.e = e || 0; wake(); },
+    setModel(model, m, form) { install(model, m, form); swap = 1; dirty = true; wake(); },
     render() { dirty = true; wake(); },
     dispose() { cancelAnimationFrame(raf); ro.disconnect(); io.disconnect(); renderer.dispose(); },
   };

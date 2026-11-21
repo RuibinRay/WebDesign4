@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Treads · Holdfast tools</title>
+  <style>
+    body { margin: 0; padding: 24px; background: #0E1110; color: #EDEFE8; font: 13px/1.4 system-ui, sans-serif; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 18px; }
+    figure { margin: 0; padding: 14px; border-radius: 10px; text-align: center; }
+    svg { width: 100%; height: auto; }
+    .sole .t.f { fill: currentColor; }
+  </style>
+</head>
+<body>
+  <p>Every tread in <code>js/soles.js</code>, on its stage colour. Dev page, not linked from the site.</p>
+  <div class="grid" id="g"></div>
+  <script>window.HOLDFAST_READY = {};</script>
+  <script src="../js/data.js"></script>
+  <script src="../js/soles.js"></script>
+  <script>
+    document.getElementById('g').innerHTML = HOLDFAST.models.map(function (m) {
+      var bg = m.stage || '#1a1f1d';
+      return '<figure style="background:' + bg + ';color:' + m.accent + '">' + HF_ART.sole(m.id, { stroke: m.accent }) +
+        '<figcaption style="color:' + (m.ink === 'dark' ? '#111' : '#EDEFE8') + '">' + m.name + ' · ' + (m.sport || m.kind) + '</figcaption></figure>';
+    }).join('');
+  </script>
+</body>
+</html>

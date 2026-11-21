@@ -265,6 +265,199 @@
     })
   );
 
+  /* ───────────── THE SPORT LINE: six more shoes, same pipeline ───────────── */
+
+  var SPORTLOOK = 'Photoreal cinematic sports photography, shot on ARRI Alexa 35, fine film grain, natural colour. ';
+  var ROAD =
+    SPORTLOOK + 'An empty multi-lane highway at blue dawn just after rain: black wet asphalt with mirror reflections of the sky and white lane lines, ' +
+    'a thin warm strip of sunrise on the horizon, cool blue light everywhere else. No haze, no lens flare.';
+  var STREETCOURT =
+    SPORTLOOK + 'An outdoor street basketball court just after a summer storm: dark painted asphalt with crisp white court lines and shallow puddles reflecting a violet dusk sky, ' +
+    'a chain-link fence, floodlights just switching on. No haze, no lens flare.';
+  var PITCH =
+    SPORTLOOK + 'A football pitch at night in driving rain: high floodlights backlighting the rain streaks, deep green wet grass glistening, spray in the air, dark empty stands. No lens flare.';
+  var RIDGE =
+    SPORTLOOK + 'A high mountain ridge in cloud and drizzle: dark wet rock steps patched with grey-green lichen, mist drifting past, cold soft light. No lens flare.';
+  var FOREST =
+    SPORTLOOK + 'A steep mountain forest trail in the rain: dark wet mud, slick roots, moss and ferns, soft green light under the canopy. No haze, no lens flare.';
+  var CLAY =
+    SPORTLOOK + 'An outdoor clay tennis court just after a short rain shower: damp terracotta clay with crisp white lines, low warm late-afternoon sun raking across it. No lens flare.';
+
+  SHOE.cheetah =
+    'a futuristic carbon-plated road racing shoe with a translucent sun-gold (#E8B53A) engineered mono-mesh upper printed with a faint darker-gold rosette pattern that fades out toward the heel, ' +
+    'a towering sculpted chalk-white (#F1EEE6) foam midsole with an aggressive rocker toe, a glossy black carbon-fibre plate showing as a thin stripe along the midsole sidewall, ' +
+    'a black rubber outsole of small raked claw-shaped pods under the forefoot, thin black laces and a black heel tab';
+  SHOE.frog =
+    'a bold high-top basketball shoe with an electric leaf-green (#6FD13B) knit upper, glossy cobalt-blue (#1F4FE0) moulded side panels, ' +
+    'a padded high collar with a wide flare-orange (#F2542D) ankle strap across the front, a chunky cobalt-blue foam midsole with a lateral outrigger, ' +
+    'and a flare-orange translucent rubber outsole made of hexagonal pads separated by deep channels, like a tree frog’s toe pad; orange laces';
+  SHOE.mako =
+    'a sleek laceless firm-ground football boot (soccer cleat) with a seamless upper that fades from deep metallic abyss-blue (#1C2A4A) on top to bright belly-white (#EEF1F2) toward the sole, ' +
+    'like a shark’s countershading, the whole upper covered in a fine raised texture of tiny ribbed tooth-shaped scales like shark skin, a low knit sock collar, ' +
+    'a thin pale ice-grey (#C9D3DB) soleplate with sharp blade studs shaped like shark teeth, and one thin bite-red (#E63B2E) slash along the heel';
+  SHOE.ibex =
+    'a rugged modern mid-cut hiking boot with a bone-white (#E9E4D8) ripstop and nubuck upper wrapped by a matte black cage, a padded collar, ' +
+    'rust-orange (#C4501E) metal lace hooks and rust laces, a black rubber rand around the toe, a coal-black (#1A1A18) midsole, ' +
+    'and a black outsole with a rim of chunky block lugs around a smoother, softer centre pad, like the hoof of a mountain goat';
+  SHOE.beetle =
+    'an aggressive mountain trail racing shoe with a coal-black ripstop upper overlaid with an iridescent film that shifts from emerald green (#1E9E6E) to violet (#6D4BC9) with the angle of the light, ' +
+    'like a tiger beetle’s shell, a stretch-knit gaiter collar, a bright emerald foam midsole, violet laces, and a black outsole of deep hooked claw-shaped lugs';
+  SHOE.spider =
+    'a clean premium tennis and padel shoe with a chalk-white (#F2F1EC) leather and mesh upper overlaid with fine black web-like lines radiating from the forefoot, ' +
+    'a white cupsole midsole with a lateral outrigger, black laces, a small black heel tab, and a clay-red (#D4572F) rubber outsole patterned like a spider web';
+
+  SOLE.cheetah = 'The outsole: black rubber with rows of small raked claw-shaped chevron pods under the forefoot, an open window under the arch showing a glossy black carbon plate, and curved ridged pads under the heel.';
+  SOLE.frog = 'The outsole: flare-orange translucent rubber covered edge to edge in hexagonal pads separated by deep channels, like a tree frog’s toe pad, with a round concentric pivot pad under the ball of the foot.';
+  SOLE.mako = 'The soleplate: pale ice-grey with sharp blade studs shaped like shark teeth around the forefoot and the heel, two round studs down the centre of the forefoot, and a ribbed spine along the arch.';
+  SOLE.ibex = 'The outsole: black rubber with a raised rim of chunky block lugs all round the edge, a smoother, softer centre pad of concentric ovals under the forefoot and the heel, a split at the toe and a deep chevron brake lug at the back of the heel.';
+  SOLE.beetle = 'The outsole: black rubber covered in deep hooked lugs shaped like small claws, curled back under the forefoot and forward under the heel, with open channels between them.';
+  SOLE.spider = 'The outsole: clay-red rubber patterned like a spider web, spokes and rings radiating from a round pivot under the ball of the foot and another under the heel, with a herringbone band under the arch.';
+
+  /* the backdrop of each sport shoe is its stage colour on the home page (stage in js/data.js) */
+  BACKDROP.cheetah = 'deep night blue (#1B2238)';
+  BACKDROP.frog = 'deep aubergine (#2A1E33)';
+  BACKDROP.mako = 'pale ice grey (#D5DDE0)';
+  BACKDROP.ibex = 'deep moss green (#2F3B2A)';
+  BACKDROP.beetle = 'pale lilac grey (#C8C0D6)';
+  BACKDROP.spider = 'deep court green (#1F4A3A)';
+
+  FIELD.cheetah =
+    ROAD + ' Camera at asphalt level, 35mm lens, frozen motion at 1/4000 s: a road runner mid-stride down the wet empty highway, only from the knees down, black running tights, ' +
+    'the back foot toeing off with a fan of fine spray flicking off the outsole, a white lane line beside it.';
+  FIELD.frog =
+    STREETCOURT + ' Low camera at court level, 24mm lens, frozen motion: a basketball player in black shorts and white crew socks making a hard crossover cut, only from the knees down, ' +
+    'one high-top shoe planted at a sharp angle on a wet court line, droplets flying off the sole, a plain orange basketball bouncing just out of focus.';
+  FIELD.mako =
+    PITCH + ' Low camera at grass level, 35mm lens, frozen motion: a footballer in black socks striking a plain white ball with the instep, only from the knees down, ' +
+    'spray exploding off the ball and the wet grass, the planted boot’s studs biting into the turf.';
+  FIELD.ibex =
+    RIDGE + ' Camera low on the rock, 28mm lens: a hiker stepping up a steep wet rock step on the ridge, only from the knees down, grey hiking trousers, ' +
+    'one boot planted on the edge of the rock with its rim lugs biting, the other pushing off, cloud drifting past behind.';
+  FIELD.beetle =
+    FOREST + ' Low camera at trail level, 24mm lens, frozen motion: a trail runner bombing down a steep muddy descent between wet roots, only from the knees down, black shorts and calf sleeves, ' +
+    'the heel landing and its hooked lugs braking into the mud, flecks of mud flying.';
+  FIELD.spider =
+    CLAY + ' Camera low at the baseline, 35mm lens, frozen motion: a tennis player sliding wide into a forehand on the damp clay, only from the knees down, white socks, ' +
+    'the leading shoe sliding sideways and throwing up a low wave of red clay, the white line crisp beside it.';
+
+  var SPORT = ['cheetah', 'frog', 'mako', 'ibex', 'beetle', 'spider'];
+  NAMES.cheetah = 'Cheetah'; NAMES.frog = 'Frog'; NAMES.mako = 'Mako'; NAMES.ibex = 'Ibex'; NAMES.beetle = 'Beetle'; NAMES.spider = 'Spider';
+  var FIELD_BRIEF = {
+    cheetah: 'Dawn, wet empty highway: a runner toes off, a fan of spray off the claw pods.',
+    frog: 'Street court after a storm: a hard crossover cut, the high-top planted on a wet line.',
+    mako: 'Floodlit pitch, driving rain: a strike, spray off the ball, studs biting the turf.',
+    ibex: 'Ridge in cloud: a boot planted on the edge of a wet rock step.',
+    beetle: 'Muddy forest descent: the heel lands and its hooked lugs brake into the mud.',
+    spider: 'Damp clay court: a wide sliding forehand throws up a low wave of clay.',
+  };
+
+  /* their animals: no product, so the cheap cinematic model */
+  var SPORT_NATURE = {
+    cheetah: {
+      alt: 'A cheetah at full sprint, its claws dug into the dust.',
+      brief: 'Telephoto, frozen sprint: a cheetah’s front paw strikes the ground, claws out and dug in, a burst of dust.',
+      prompt:
+        'Photoreal wildlife photography, 600mm telephoto lens, frozen motion at 1/8000 s, fine grain. A cheetah at full sprint across dry savanna, low angle, ' +
+        'its front paw striking the ground with the claws extended and dug into the dust, a small burst of dust from the pad, golden grass blurred behind, warm low sun. ',
+    },
+    frog: {
+      alt: 'A tree frog clinging upside down to a wet leaf by its toe pads.',
+      brief: 'Macro: a red-eyed tree frog upside down under a wet leaf, its round orange toe pads pressed flat.',
+      prompt: MACRO + ' A red-eyed tree frog clinging upside down to the underside of a wet green leaf, its big round orange toe pads spread and pressed flat against the leaf, beads of water around them, dark rainforest behind. ',
+    },
+    mako: {
+      alt: 'Shark skin up close: thousands of tiny ribbed scales like teeth.',
+      brief: 'Extreme macro: wet blue shark skin, thousands of tiny ribbed tooth-shaped scales all pointing one way.',
+      prompt: MACRO + ' Extreme close-up of the wet skin of a mako shark, deep metallic blue: thousands of tiny overlapping ribbed tooth-shaped scales (dermal denticles), all pointing the same way, catching a raking light like fine armour. ',
+    },
+    ibex: {
+      alt: 'An ibex on a cliff ledge no wider than its hooves.',
+      brief: 'Telephoto: an Alpine ibex on a sheer cliff ledge, close on its split hooves gripping the edge.',
+      prompt:
+        'Photoreal wildlife photography, 400mm lens, fine grain. An Alpine ibex standing on a sheer cliff ledge no wider than its hooves, framed close on its legs and split hooves gripping the rock edge, ' +
+        'the drop falling away below, misty mountains behind, cold morning light. ',
+    },
+    beetle: {
+      alt: 'A tiger beetle on wet sand, its hooked claws dug in.',
+      brief: 'Macro at sand level: a metallic green tiger beetle braced on wet sand, its hooked claws dug in.',
+      prompt: MACRO + ' A metallic tiger beetle on wet sand, seen low at sand level, its long thin legs braced and the curved hooked claws on its feet digging into the sand grains, its shell iridescent emerald shifting to violet. ',
+    },
+    spider: {
+      alt: 'A jumping spider’s feet pressed flat on glass, seen from below.',
+      brief: 'Macro through glass: a jumping spider seen from below, the hair pads under its feet pressed flat.',
+      prompt: MACRO + ' A jumping spider walking on a pane of glass, seen from below through the glass: the dense tufts of fine hairs under each foot pressed flat against the glass, its large front eyes visible, dark background. ',
+    },
+  };
+
+  /* stage 1: masters and animals */
+  SPORT.forEach(function (m) {
+    shots.push(
+      gpt({
+        id: m + '-side', stage: 1, aspect: '4:3', tone: 'studio', model_of: m,
+        used: ['Home: Sport card', 'Shoe page: main image', 'Master reference for every other ' + NAMES[m] + ' image'],
+        alt: 'The Holdfast ' + NAMES[m] + ' in side profile.',
+        brief: NAMES[m] + ', exact side profile, toe right, on a flat ' + BACKDROP[m].replace(/ \(.*\)/, '') + ' backdrop. This image defines the shoe.',
+        prompt:
+          STUDIO + ' Backdrop: ' + BACKDROP[m] + '. A single ' + SHOE[m] + '. ' +
+          'Exact side profile of the outer side, toe pointing right, sitting flat on the floor, centred, filling about 80% of the frame width, ' +
+          'camera at sole height so the midsole and the outsole edge are clearly visible. ' + NEG,
+      }),
+      soul({
+        id: 'nature-' + m, stage: 1, aspect: '3:4', tone: 'deep', model_of: m,
+        used: [NAMES[m] + ' page: how it grips'],
+        alt: SPORT_NATURE[m].alt, brief: SPORT_NATURE[m].brief, prompt: SPORT_NATURE[m].prompt + NEG,
+      })
+    );
+  });
+
+  /* stage 2: pair, sole, field from each master */
+  SPORT.forEach(function (m) {
+    var ref = ['higgsfield/renders/' + m + '-side.png'];
+    shots.push(
+      gpt({
+        id: m + '-pair', stage: 2, aspect: '4:5', tone: 'studio', model_of: m, refs: ref,
+        used: ['Shoe page: gallery'],
+        alt: 'A pair of Holdfast ' + NAMES[m] + ', one standing, one on its side showing the sole.',
+        brief: 'The pair: one shoe at a three-quarter front angle, the other on its side behind it showing the outsole.',
+        prompt:
+          STUDIO + ' Backdrop: ' + BACKDROP[m] + '. A pair of shoes: ' + SHOE[m] + '. One shoe stands in three-quarter front view, ' +
+          'the second lies on its side just behind it with its outsole facing camera. Camera slightly above, 70mm lens. ' + SAME + ' ' + NEG,
+      }),
+      gpt({
+        id: m + '-sole', stage: 2, aspect: '3:4', tone: 'studio', model_of: m, refs: ref,
+        used: ['Shoe page: gallery'],
+        alt: 'The outsole of the Holdfast ' + NAMES[m] + ', seen straight on.',
+        brief: 'Top-down on the outsole, shoe upside down, toe at the top, every lug crisp.',
+        prompt:
+          STUDIO + ' Backdrop: ' + BACKDROP[m] + '. Top-down view looking straight down at the outsole of a single shoe lying upside down, ' +
+          'toe at the top of the frame, the whole sole visible and centred with even space around it, every lug and groove crisp. ' +
+          SOLE[m] + ' ' + SAME + ' ' + NEG,
+      }),
+      gpt({
+        id: m + '-field', stage: 2, aspect: '3:2', tone: m === 'mako' || m === 'frog' ? 'night' : 'deep', model_of: m, refs: ref,
+        used: ['Home: 06 In the field', 'Shoe page: gallery'],
+        alt: 'The Holdfast ' + NAMES[m] + ' in use.',
+        brief: FIELD_BRIEF[m],
+        prompt: FIELD[m] + ' The shoes: ' + SHOE[m] + '. ' + SAME + ' ' + NEG,
+      })
+    );
+  });
+
+  /* stage 2: the six together, for the top of the sport cards */
+  shots.push(
+    gpt({
+      id: 'sport-lineup', stage: 2, aspect: '21:9', tone: 'studio', refs: SPORT.map(function (m) { return 'higgsfield/renders/' + m + '-side.png'; }),
+      used: ['Home: the Sport line banner'],
+      alt: 'The six Holdfast sport shoes in a row: road racer, basketball high-top, football boot, hiking boot, trail racer and tennis shoe.',
+      brief: 'All six sport shoes in one row, side profiles, toes right, on one seamless dark backdrop, each lit like a trophy.',
+      prompt:
+        STUDIO + ' Backdrop: seamless basalt black (#0E1110), a soft pool of light under each shoe. Six different sport shoes standing in one evenly spaced row, ' +
+        'each in exact side profile with its toe pointing right, in this order from left to right, each one exactly as in the matching reference image: ' +
+        'the gold carbon-plated road racer, the green and cobalt basketball high-top, the blue-to-white bladed football boot, the white and rust mid hiking boot, ' +
+        'the black and emerald trail racer, the white tennis shoe with the clay-red sole. Wide 35mm frame, camera at sole height. Do not redesign any shoe. ' + NEG,
+    })
+  );
+
   /* ───────────── STAGE 3: end frames for the films (they reference stage 2 images) ───────────── */
   var MACRO_ROCK =
     'Photoreal macro product cinematography, 100mm macro lens at rock level, shot on ARRI Alexa 35, fine grain. ' +
@@ -319,7 +512,7 @@
   );
 
   /* ───────────── STAGE 3: 3D models of each shoe, from its master ───────────── */
-  var models3d = MODELS.map(function (m) {
+  var models3d = MODELS.concat(SPORT).map(function (m) {
     return {
       id: '3d-' + m, kind: 'model3d', stage: 3, model: 'tripo_h3_1_image_to_3d', model_of: m,
       params: { texture: true, pbr: true, orientation: 'align_image' },

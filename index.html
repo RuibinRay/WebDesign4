@@ -130,10 +130,42 @@
       <div class="wrap">
         <header class="sec-head">
           <p class="label rv"><span>03</span> The range</p>
-          <h2 class="h2 rv" id="shoes-title">Four ways to hold.</h2>
-          <p class="body-l sec-head__aside rv">One shoe for each surface that usually puts you on the ground. Each sole is copied from an animal that lives there.</p>
+          <h2 class="h2 rv" id="shoes-title">Ten ways to hold.</h2>
+          <p class="body-l sec-head__aside rv">Two lines. Shore, for the wet places that usually put you on the ground. Sport, for the games where the ground moves fast. Every sole is copied from an animal.</p>
         </header>
-        <div class="cards" data-cards></div>
+        <div class="range-head rv"><h3 class="range-head__name">Shore</h3><p>Four ways to hold: wet rock, city rain, decks and slab.</p><a href="#sport">Sport line ↓</a></div>
+        <div class="cards" data-cards="shore"></div>
+      </div>
+    </section>
+
+    <!-- ───────────── 03 · SPORT: pinned. Scroll turns each sport shoe in real-time 3D ───────────── -->
+    <section class="sport" id="sport" data-sport data-gauge="Sport" style="--len:680" aria-labelledby="sport-title">
+      <div class="sport__pin">
+        <div class="sport__word" aria-hidden="true"><span data-sport-word>RUN</span></div>
+        <div class="wrap sport__inner">
+          <header class="sport__head">
+            <p class="label"><span>03</span> Holdfast Sport</p>
+            <h2 class="sport__title" id="sport-title">Six sports. Six animals that grip at speed.</h2>
+          </header>
+          <div class="sport__tabs" role="tablist" aria-label="Choose a sport" data-sport-tabs></div>
+          <div class="sport__stage">
+            <div class="sport__view">
+              <canvas class="sport__canvas" data-sport-canvas role="img" aria-label="A 3D sport shoe."></canvas>
+              <div class="sport__fallback" aria-hidden="true" data-sport-fallback></div>
+            </div>
+            <div class="sport__info" id="sport-panel" role="tabpanel" aria-live="polite" data-sport-info></div>
+            <div class="sport__sole" data-sport-sole></div>
+          </div>
+          <div class="sport__hud" aria-hidden="true"><span>Real-time 3D · drag to turn</span><span data-sport-n>01 / 06</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="shoes shoes--sport" aria-label="The sport line">
+      <div class="wrap">
+        <div class="range-head rv"><h3 class="range-head__name">Sport</h3><p>Six ways to win: road, court, pitch, mountain, trail and clay.</p></div>
+        <figure class="slot sport-lineup rv" data-shot="sport-lineup" data-sizes="(max-width: 1400px) 100vw, 1360px"></figure>
+        <div class="cards cards--sport" data-cards="sport"></div>
       </div>
     </section>
 
@@ -249,6 +281,10 @@
       <nav class="foot__col" aria-label="Shoes">
         <p class="foot__h">Shoes</p>
         <a href="shoe.html?m=kelp">Kelp</a><a href="shoe.html?m=gecko">Gecko</a><a href="shoe.html?m=octo">Octo</a><a href="shoe.html?m=limpet">Limpet</a>
+      </nav>
+      <nav class="foot__col" aria-label="Sport shoes">
+        <p class="foot__h">Sport</p>
+        <a href="shoe.html?m=cheetah">Cheetah · Run</a><a href="shoe.html?m=frog">Frog · Hoops</a><a href="shoe.html?m=mako">Mako · Soccer</a><a href="shoe.html?m=ibex">Ibex · Hike</a><a href="shoe.html?m=beetle">Beetle · Trail</a><a href="shoe.html?m=spider">Spider · Tennis</a>
       </nav>
       <nav class="foot__col" aria-label="Brand">
         <p class="foot__h">Holdfast</p>

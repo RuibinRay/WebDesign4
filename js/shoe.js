@@ -1,5 +1,5 @@
 /*
- * HOLDFAST: the shoe page. One template for the whole range: shoe.html?m=kelp|gecko|octo|limpet
+ * HOLDFAST: the shoe page. One template for the whole range: shoe.html?m=<id>, any shoe in js/data.js (shore or sport)
  * Runs before common.js so the slots and reveals it writes are picked up there.
  */
 (function (root) {
@@ -34,7 +34,7 @@
     root.HF_UI.load3d(function (H) {
       if (!H.supported()) { box3d.classList.add('is-off'); return; }
       view3d = H.create(canvas3d, {
-        model: m.id, mat: m.mat, mode: 'viewer', glb: glb,
+        model: m.id, mat: m.mat, form: m.form, mode: 'viewer', glb: glb,
         /* a scanned model is one mesh, so it cannot come apart: hide that button */
         onGlb: function () { var b = box3d.querySelector('[data-v="explode"]'); if (b) b.hidden = true; },
       });
@@ -80,7 +80,7 @@
 
   /* sizes: a couple shown as sold out so the state is designed */
   var SIZES = ['7', '7.5', '8', '8.5', '9', '9.5', '10', '10.5', '11', '11.5', '12', '13'];
-  var OUT = { kelp: ['7', '12'], gecko: ['13'], octo: ['7.5', '11.5'], limpet: ['8'] }[m.id] || [];
+  var OUT = { kelp: ['7', '12'], gecko: ['13'], octo: ['7.5', '11.5'], limpet: ['8'], cheetah: ['9', '9.5'], frog: ['13'], mako: ['7', '8.5'], ibex: ['12'], beetle: ['10.5'], spider: ['7.5'] }[m.id] || [];
   var sizesEl = $('[data-size-grid]'), hint = $('[data-hint]'), chosen = null;
   sizesEl.innerHTML = SIZES.map(function (s) {
     var out = OUT.indexOf(s) > -1;
@@ -115,10 +115,10 @@
   $('[data-how-sole]').innerHTML = ART.sole(m.id, { className: 'sole--draw', label: 'The ' + m.name + ' outsole, drawn' });
 
   /* specs and grip meters */
-  var LABEL = { weight: 'Weight (US 9)', drop: 'Heel-to-toe drop', stack: 'Stack, heel / toe', lug: 'Lug depth', rubber: 'Rubber' };
+  var LABEL = { weight: 'Weight (US 9)', drop: 'Heel-to-toe drop', stack: 'Stack, heel / toe', lug: m.id === 'mako' ? 'Studs' : 'Lugs', plate: 'Plate', cut: 'Cut', rubber: m.id === 'mako' ? 'Grip' : 'Rubber' };
   $('[data-specs]').innerHTML = '<tbody>' + Object.keys(m.specs).map(function (k) {
     return '<tr><th scope="row">' + LABEL[k] + '</th><td>' + esc(m.specs[k]) + '</td></tr>';
-  }).join('') + '<tr><th scope="row">Wet-granite friction</th><td>μ ' + m.mu.toFixed(2) + '</td></tr></tbody>';
+  }).join('') + '<tr><th scope="row">' + esc(m.muLabel) + '</th><td>μ ' + m.mu.toFixed(2) + '</td></tr></tbody>';
   $('[data-meters]').innerHTML = Object.keys(m.grip).map(function (k) {
     var v = m.grip[k], bars = '';
     for (var i = 1; i <= 5; i++) bars += '<b class="' + (i <= v ? 'on' : '') + '"></b>';
@@ -126,8 +126,11 @@
   }).join('');
 
   /* the rest of the range */
-  $('[data-others]').innerHTML = HF.models.filter(function (o) { return o.id !== m.id; }).map(function (o) {
+  /* same line first */
+  var others = HF.models.filter(function (o) { return o.id !== m.id; });
+  others.sort(function (a, b) { return (a.range === m.range ? 0 : 1) - (b.range === m.range ? 0 : 1); });
+  $('[data-others]').innerHTML = others.map(function (o) {
     return '<a class="other" href="shoe.html?m=' + o.id + '"><div style="view-transition-name:shoe-' + o.id + '"><figure class="slot" data-shot="' + o.id + '-side" data-sizes="(max-width: 800px) 100vw, 33vw"></figure></div>' +
-      '<span class="other__name"><span style="view-transition-name:name-' + o.id + '">' + esc(o.name) + '</span> <small>' + esc(o.kind) + ' · $' + o.price + '</small></span></a>';
+      '<span class="other__name"><span style="view-transition-name:name-' + o.id + '">' + esc(o.name) + '</span> <small>' + esc(o.sport || o.kind) + ' · $' + o.price + '</small></span></a>';
   }).join('');
 })(window);

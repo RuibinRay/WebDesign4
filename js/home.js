@@ -10,14 +10,14 @@
   var clamp = function (v, a, b) { return Math.max(a, Math.min(b, v)); };
 
   /* ───────────── 03 CARDS (the image and name morph into the shoe page: see View Transitions in the CSS) ───────────── */
-  var cards = $('[data-cards]');
-  if (cards) {
-    cards.innerHTML = HF.models.map(function (m, i) {
+  Array.prototype.forEach.call(document.querySelectorAll('[data-cards]'), function (cards) {
+    var sport = cards.dataset.cards === 'sport', list = sport ? HF.sport : HF.shore;
+    cards.innerHTML = list.map(function (m, i) {
       return (
         '<a class="card rv" href="shoe.html?m=' + m.id + '" style="--card-accent:' + m.accent + '">' +
         '<div class="card__media" style="view-transition-name:shoe-' + m.id + '"><figure class="slot" data-shot="' + m.id + '-side" data-sizes="(max-width: 820px) 100vw, 50vw"></figure></div>' +
         '<div class="card__body">' +
-        '<div><p class="card__idx">03.' + (i + 1) + ' · Learned from ' + esc(m.learned) + '</p>' +
+        '<div><p class="card__idx">' + (sport ? esc(m.sport) : '03.' + (i + 1)) + ' · Learned from ' + esc(m.learned) + '</p>' +
         '<h3 class="card__name" style="view-transition-name:name-' + m.id + '">' + esc(m.name) + '</h3>' +
         '<p class="card__kind">' + esc(m.kind) + '</p></div>' +
         ART.sole(m.id, { className: 'card__sole sole--draw', label: m.name + ' tread' }) +
@@ -27,22 +27,108 @@
     }).join('');
     MEDIA.all(cards);
     UI.watch(cards);
+  });
+
+  /* ───────────── 03 SPORT: pinned. One chapter per sport. The real-time 3D shoe is rebuilt for each
+     (its form in data.js: high-top, studs, carbon plate…), turns as you scroll and opens a little in the
+     middle of the chapter; the stage takes that shoe's colour, its tread draws itself, a giant word slides past. ───────────── */
+  var sp = $('[data-sport]');
+  if (sp) {
+    var SP = HF.sport, SN = SP.length, spChapter = -1, spQ = 0, spView = null, spAsked = false;
+    var spTabs = $('[data-sport-tabs]', sp), spInfo = $('[data-sport-info]', sp), spSole = $('[data-sport-sole]', sp);
+    var spWord = $('[data-sport-word]', sp), spN = $('[data-sport-n]', sp), spCanvas = $('[data-sport-canvas]', sp), spFb = $('[data-sport-fallback]', sp);
+    var spSvg = null, pad = function (n) { return (n < 10 ? '0' : '') + n; };
+    var SPEC = { weight: 'Weight', drop: 'Drop', stack: 'Stack', lug: 'Grip', plate: 'Plate', cut: 'Cut' };
+
+    spTabs.innerHTML = SP.map(function (m, i) {
+      return '<button class="sport__tab" role="tab" id="sptab-' + m.id + '" data-i="' + i + '" aria-selected="false" aria-controls="sport-panel" aria-label="' + esc(m.sport) + ': ' + esc(m.name) + '"><small>' + pad(i + 1) + '</small><span>' + esc(m.sport) + '</span><i class="lab__bar" aria-hidden="true"><b></b></i></button>';
+    }).join('');
+
+    var spChapterTo = function (i) {
+      if (i === spChapter) return;
+      spChapter = i;
+      var m = SP[i];
+      Array.prototype.forEach.call(spTabs.children, function (t, k) { t.setAttribute('aria-selected', String(k === i)); t.tabIndex = k === i ? 0 : -1; });
+      sp.style.setProperty('--st-bg', m.stage);
+      sp.style.setProperty('--st-accent', m.accent);
+      sp.classList.toggle('is-dark-ink', m.ink === 'dark');
+      spWord.textContent = m.word;
+      spN.textContent = pad(i + 1) + ' / ' + pad(SN);
+      var keys = Object.keys(SPEC).filter(function (k) { return m.specs[k]; }).slice(0, 4);
+      spInfo.innerHTML =
+        '<p class="sport__kicker">' + pad(i + 1) + ' · ' + esc(m.sport) + '</p>' +
+        '<h3 class="sport__name">' + esc(m.name) + '</h3>' +
+        '<p class="sport__kind">' + esc(m.kind) + ' · learned from ' + esc(m.learned) + '</p>' +
+        '<p class="sport__line">' + esc(m.line) + '</p>' +
+        '<dl class="sport__specs">' + keys.map(function (k) { return '<div><dt>' + SPEC[k] + '</dt><dd>' + esc(m.specs[k]) + '</dd></div>'; }).join('') + '</dl>' +
+        '<a class="sport__go" href="shoe.html?m=' + m.id + '">View the ' + esc(m.name) + ' <b>$' + m.price + '</b></a>';
+      spInfo.setAttribute('aria-labelledby', 'sptab-' + m.id);
+      spSole.innerHTML = '<span class="sport__sole-tag">Outsole · ' + esc(m.name) + '</span>' + ART.sole(m.id, { className: 'sole--scrub', label: 'The ' + m.name + ' outsole, drawn' });
+      spSvg = spSole.querySelector('svg');
+      spFb.innerHTML = ART.sole(m.id, { label: '' });
+      if (spView) spView.setModel(m.id, m.mat, m.form);
+    };
+    var spPaint = function () {
+      var q = spQ, still = UI.reduce();
+      if (spSvg) spSvg.style.setProperty('--draw', (1 - clamp(q / 0.6, 0, 1)).toFixed(3));
+      spWord.style.transform = still ? '' : 'translate3d(' + ((0.5 - q) * 24).toFixed(2) + 'vw,0,0)';
+      if (spView) {
+        /* from a front three-quarter, past the side, to a rear three-quarter; it opens a little mid-turn */
+        var open = Math.pow(Math.sin(q * Math.PI), 2);
+        spView.setPose(0.2 + 0.12 * open, -2.35 + q * 1.6, still ? 0 : 0.42 * open);
+      }
+    };
+    var spUpdate = function () {
+      var r = sp.getBoundingClientRect(), span = sp.offsetHeight - window.innerHeight;
+      if (!spAsked && r.top < window.innerHeight * 2.5 && r.bottom > -window.innerHeight) {
+        spAsked = true;
+        UI.load3d(function (H) {
+          if (!H.supported()) { sp.classList.add('no-3d'); return; }
+          var m = SP[Math.max(0, spChapter)];
+          spView = H.create(spCanvas, { model: m.id, mat: m.mat, form: m.form, mode: 'stage' });
+          spCanvas.setAttribute('aria-label', 'A real-time 3D view of the Holdfast sport shoes, one per sport. Drag to turn it.');
+          sp.classList.add('has-3d');
+          spPaint();
+        });
+      }
+      var x = (span > 0 ? clamp(-r.top / span, 0, 1) : 0) * SN;
+      var i = Math.min(SN - 1, Math.floor(x));
+      spQ = i === SN - 1 && x >= SN ? 1 : clamp(x - i, 0, 1);
+      spChapterTo(i);
+      Array.prototype.forEach.call(spTabs.children, function (t, k) { t.style.setProperty('--fill', k < i ? 1 : k === i ? spQ.toFixed(3) : 0); });
+      spPaint();
+    };
+    var spGo = function (i) {
+      var span = sp.offsetHeight - window.innerHeight, top = sp.getBoundingClientRect().top + window.scrollY;
+      UI.scrollToY(top + ((i + 0.3) / SN) * span);
+    };
+    spTabs.addEventListener('click', function (e) { var b = e.target.closest('[data-i]'); if (b) spGo(Number(b.dataset.i)); });
+    spTabs.addEventListener('keydown', function (e) {
+      var next = { ArrowRight: spChapter + 1, ArrowLeft: spChapter - 1, Home: 0, End: SN - 1 }[e.key];
+      if (next === undefined) return;
+      e.preventDefault();
+      next = (next + SN) % SN;
+      spGo(next);
+      spTabs.children[next].focus();
+    });
+    UI.onScroll(spUpdate);
+    spUpdate();
   }
 
   /* ───────────── 04 GRIP LAB: pinned. Scrolling plays each animal's Higgsfield film in turn
      (assets/film/lab-<id>/d), while that shoe's tread draws itself. One chapter per animal. ───────────── */
-  var labEl = $('[data-labscroll]'), tabs = $('[data-lab-tabs]'), stage = $('[data-lab-stage]');
+  var LAB = HF.shore, labEl = $('[data-labscroll]'), tabs = $('[data-lab-tabs]'), stage = $('[data-lab-stage]');
   if (labEl && tabs) {
     var natureEl = $('[data-lab-nature]'), soleEl = $('[data-lab-sole]'), textEl = $('[data-lab-text]');
     var labCanvas = $('[data-lab-canvas]'), labCtx = labCanvas.getContext('2d'), clock = $('[data-lab-clock]');
     var LABFILMS = (root.HOLDFAST_READY || {}).film || {};
-    var N = HF.models.length, seqs = {}, chapter = -1, q = 0, soleSvg = null, drawnImg = null;
-    HF.models.forEach(function (m) {
+    var N = LAB.length, seqs = {}, chapter = -1, q = 0, soleSvg = null, drawnImg = null;
+    LAB.forEach(function (m) {
       var f = LABFILMS['lab-' + m.id];
-      if (f && f.d && root.HF_SEQ) seqs[m.id] = root.HF_SEQ('lab-' + m.id + '/d', f.d, function () { if (HF.models[chapter] === m) paintLab(true); });
+      if (f && f.d && root.HF_SEQ) seqs[m.id] = root.HF_SEQ('lab-' + m.id + '/d', f.d, function () { if (LAB[chapter] === m) paintLab(true); });
     });
 
-    tabs.innerHTML = HF.models.map(function (m) {
+    tabs.innerHTML = LAB.map(function (m) {
       return '<button class="lab__tab" role="tab" id="tab-' + m.id + '" data-id="' + m.id + '" aria-selected="false"><small>' + esc(m.learned.replace('the ', '')) + '</small><span>' + esc(m.name) + '</span><i class="lab__bar" aria-hidden="true"><b></b></i></button>';
     }).join('');
 
@@ -55,7 +141,7 @@
     var setChapter = function (i) {
       if (i === chapter) return;
       chapter = i;
-      var m = HF.models[i];
+      var m = LAB[i];
       Array.prototype.forEach.call(tabs.children, function (t, k) { t.setAttribute('aria-selected', String(k === i)); t.tabIndex = k === i ? 0 : -1; });
       natureEl.setAttribute('data-shot', 'nature-' + m.id);
       natureEl.className = 'slot slot--fill lab__nature';
@@ -75,11 +161,11 @@
       sizeLab();
       labCtx.clearRect(0, 0, labCanvas.width, labCanvas.height);
       if (seqs[m.id]) seqs[m.id].start();
-      var nxt = HF.models[i + 1];
+      var nxt = LAB[i + 1];
       if (nxt && seqs[nxt.id]) seqs[nxt.id].start();
     };
     var paintLab = function (force) {
-      var m = HF.models[chapter];
+      var m = LAB[chapter];
       if (!m) return;
       /* the tread draws during the first 70% of the chapter, then holds */
       if (soleSvg) soleSvg.style.setProperty('--draw', (1 - clamp(q / 0.7, 0, 1)).toFixed(3));
@@ -154,7 +240,7 @@
     svg.setAttribute('viewBox', '0 56 830 300');
     svg.insertAdjacentHTML('beforeend', html);
 
-    pick.innerHTML = HF.models.map(function (m) {
+    pick.innerHTML = HF.shore.map(function (m) {
       return '<button type="button" role="radio" data-id="' + m.id + '" aria-checked="' + (m.id === 'kelp') + '">' + esc(m.name) + '</button>';
     }).join('');
     pick.addEventListener('click', function (e) {
@@ -228,6 +314,12 @@
       gecko: 'Painted crossing · city rain · 23:40',
       octo: 'Weed-covered jetty · low tide · 12:05',
       limpet: 'Granite slab · meltwater · 06:30',
+      cheetah: 'Empty highway · rain at dawn · 05:52',
+      frog: 'Street court · after the storm · 19:15',
+      mako: 'Floodlit pitch · driving rain · 21:30',
+      ibex: 'Ridge step · cloud and drizzle · 10:40',
+      beetle: 'Forest descent · mud and roots · 16:20',
+      spider: 'Clay court · after a shower · 17:45',
     };
     track.innerHTML = HF.models.map(function (m) {
       return '<article class="field__panel"><figure class="slot" data-shot="' + m.id + '-field" data-sizes="75vw"></figure>' +

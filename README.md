@@ -2,7 +2,9 @@
 
 **Live:** https://ruibinray.github.io/WebDesign4/ (GitHub Pages, deployed from `main`, root folder; repository [RuibinRay/WebDesign4](https://github.com/RuibinRay/WebDesign4)).
 
-Concept shoe brand. The brief was “Grip, or a better name.” **Holdfast** keeps the idea and gives it a story: a kelp’s holdfast is the knot of fingers that grips bare rock through storms. The range copies four animals that never slip.
+Concept shoe brand. The brief was “Grip, or a better name.” **Holdfast** keeps the idea and gives it a story: a kelp’s holdfast is the knot of fingers that grips bare rock through storms. There are two lines. **Shore** copies four animals that never slip on wet ground. **Sport** copies six that grip at speed.
+
+**Shore**
 
 | Shoe | Learned from | For | Price |
 |---|---|---|---|
@@ -11,6 +13,17 @@ Concept shoe brand. The brief was “Grip, or a better name.” **Holdfast** kee
 | **Octo** | the octopus sucker: soft suction pods, drain ports | Decks, weed, tidepools | $120 |
 | **Limpet** | the limpet shell: smooth smearing toe, ring-lug heel | Granite, slab, scree | $180 |
 
+**Sport** (added 2026-11-21, on “design cooler looking shoes for running basketball soccer and hike and etc”)
+
+| Shoe | Sport | Learned from | Build | Price |
+|---|---|---|---|---|
+| **Cheetah** | Running | the cheetah claw: raked claw pods under the forefoot | Road racer, tall rocker foam, full-length carbon plate. Sun gold on night blue | $250 |
+| **Frog** | Basketball | the tree frog toe pad: hex pads split by drain channels, pivot pad | High-top with ankle strap. Leaf green, cobalt, flare orange | $185 |
+| **Mako** | Soccer | shark skin: denticle-textured upper, blade studs like teeth | Laceless firm-ground boot, sock collar. Abyss blue fading to white | $240 |
+| **Ibex** | Hiking | the ibex hoof: hard rim lugs around a soft centre pad, split toe | Mid boot. Bone, rust, coal | $230 |
+| **Beetle** | Trail | the tiger beetle claw: hooked lugs, back under the forefoot, forward under the heel | Mountain trail racer, knit gaiter collar. Black with an emerald-to-violet sheen | $195 |
+| **Spider** | Tennis & padel | the jumping spider foot: a web of spokes and rings round two pivots | Court shoe with outrigger. Chalk white, clay-red sole | $170 |
+
 **Look:** basalt black `#0E1110`, sea fog `#C5CCC4`, surf white `#EDEFE8`, and one colour borrowed from map lichen, `#C9F03C`. Secondary: ember `#E8772E`, tide `#12383A`, coral `#F28C7A`. Type: Archivo at full width (125) for display, the stance you take on something slippery, and Martian Mono for labels. Product shots are colour-blocked: each shoe has its own backdrop.
 
 ## What the page does
@@ -18,6 +31,7 @@ Concept shoe brand. The brief was “Grip, or a better name.” **Holdfast** kee
 | Piece | How it works | Before Higgsfield | After |
 |---|---|---|---|
 | **Hero film** | A 300 svh section pins the screen; scrolling plays a 10 s film forward and back. Copy “chapters” fade in at set moments (“Don’t let go.” → “The wave hits.” → “The shoe stays.”). A film HUD shows the timeline, beats and timecode. Portrait phones play their own film, shot vertically (`film-hero-m`), so the whole shoe stays in frame. | The storyboard plays: the HUD reads out each beat as you scroll | Frames drawn on a canvas; with only the start and end stills, a slow push-in crossfade |
+| **03 Sport stage** | Pinned, six chapters, one per sport. The real-time 3D shoe is rebuilt for each sport from its `form` (high-top, studs, carbon plate, mid boot…) and turns from front to back as you scroll, opening slightly mid-turn. The stage takes the shoe's colour, a giant outlined word (RUN, HOOPS, SOCCER, HIKE, TRAIL, TENNIS) slides past, and the tread draws itself. Tabs are progress bars; click or use the arrow keys; drag to turn. Phones show the shoe over a short panel, with numbered tabs. | Works fully (drawn, not generated) | Same |
 | **Press film** | Same engine, 5 s macro: the sole lands and squeezes the water out | Storyboard | Frames |
 | **04 Grip Lab** | Pinned, four chapters (one per animal, about 115 svh each). Within a chapter, scroll plays that animal's 5 s film (kelp holdfast in a surge, gecko toes flattening on glass, octopus suckers sealing, limpets under a wash) while that shoe's tread draws itself line by line. The tabs are progress bars; clicking one (or using the arrow keys) jumps to that animal. On phones the text switches from "how it holds" to "how the sole copies it" halfway through. Frames come from `assets/film/lab-<id>/d` through `HF_SEQ` in `js/film.js`. | The nature photo with a slow push-in | Frames |
 | **3D Kelp, taken apart** | A real-time three.js shoe built from the same tread data as the drawings: lugs, ribbed midsole with toe spring, footbed, knit upper with laces and heel loop. Scrolling turns it and explodes it layer by layer, one step per feature. Stop between steps and it settles onto the nearest one; arrow keys step through; drag to turn it at any step, and it eases back when you let go. | Works fully | Same (it is drawn, not generated) |
@@ -32,13 +46,26 @@ Concept shoe brand. The brief was “Grip, or a better name.” **Holdfast** kee
 
 | Page | What it is |
 |---|---|
-| `index.html` | Home: hero film, the holdfast story, press film, the four shoes, Grip Lab + ramp test, the Kelp taken apart in 3D, a pinned sideways field gallery, sign-up |
-| `shoe.html?m=kelp` | Shoe page, one template for all four (`?m=gecko`, `?m=octo`, `?m=limpet`): 3D view and photos, size picker with sold-out states, bag, how it grips, specs, grip meters |
+| `index.html` | Home: hero film, the holdfast story, press film, the range (Shore cards, the Sport stage, Sport cards with a line-up banner), Grip Lab + ramp test, the Kelp taken apart in 3D, a pinned sideways field gallery of all ten, sign-up |
+| `shoe.html?m=kelp` | Shoe page, one template for all ten (`?m=gecko`, `?m=mako`, `?m=spider` …): 3D view and photos, size picker with sold-out states, bag, how it grips, specs, grip meters |
 | `shots.html` | The shot sheet (not linked from the site): every image, film and 3D model with its prompt, model, inputs, price, status and copy buttons |
+
+## The Sport line: not generated yet
+
+The six sport shoes are fully built: data, treads, 3D, the stage, cards, shoe pages, and every prompt in `js/shots.js`. Until their photos exist, their slots show designed placeholders in each shoe's colour. **37 assets, 104.72 credits** (dry run on 2026-11-21, balance 2,714.30):
+
+| What | Count | Credits |
+|---|---|---|
+| Masters (`<id>-side`), then pair, sole and field from each master | 24 | 48.00 |
+| The six together (`sport-lineup`, 21:9, the six masters as references) | 1 | 2.00 |
+| Their animals (`nature-<id>`, Soul Cinematic) | 6 | 0.72 |
+| Textured 3D models (`3d-<id>`, Tripo). Optional: the drawn 3D already shows each build | 6 | 54.00 |
+
+`node higgsfield/generate.mjs images --go` makes the 31 images (50.72); `3d --go` makes the models. Nothing runs without `--go`.
 
 ## Generated on Higgsfield (2026-11-20)
 
-**All 39 assets are made, reviewed and live:** 28 images, 4 textured 3D models and 7 scroll films (hero, its vertical phone version, press, and the four Grip Lab animal films), for about **253.5 credits** (GPT Image 2.6 was 2.00 a shot that evening, not the 2.75 first quoted). The four Grip Lab films (75 credits) start from the nature photos, with no end frame, and keep their 3:4 shape (`aspect: 'auto'`); all four were right on the first roll. Nothing on the site is a placeholder any more; `shots.html` reads 39 of 39 ready.
+**The Shore line's 39 assets are made, reviewed and live:** 28 images, 4 textured 3D models and 7 scroll films (hero, its vertical phone version, press, and the four Grip Lab animal films), for about **253.5 credits** (GPT Image 2.6 was 2.00 a shot that evening, not the 2.75 first quoted). The four Grip Lab films (75 credits) start from the nature photos, with no end frame, and keep their 3:4 shape (`aspect: 'auto'`); all four were right on the first roll. Nothing on the site is a placeholder any more; `shots.html` reads 39 of 39 ready.
 
 | Stage | What | Model |
 |---|---|---|
@@ -64,6 +91,7 @@ What review changed:
 - `node tools/contact-sheet.mjs [prefix …]` makes a labelled sheet of renders.
 - `node tools/film-strip.mjs <film>` shows seven frames across a cut film.
 - `node tools/sample-backdrops.mjs` reads the real backdrop colours.
+- `tools/treads.html` shows every tread on its colour; `tools/shoes3d.html?view=side|three|sole|explode` shows every drawn 3D shoe at once (open them through `node tools/serve.mjs`).
 
 The pipeline below is how to re-make or re-roll anything.
 
@@ -98,7 +126,7 @@ The optimiser writes:
 
 ## Edit the content
 
-- **Range data:** the range, copy, prices, specs, grip ratings and 3D colours are in `js/data.js`.
+- **Range data:** the range, copy, prices, specs, grip ratings and 3D colours are in `js/data.js`. `range` puts a shoe in Shore or Sport; a sport shoe also has `sport`, `word`, `stage`/`ink` (its stage colour, the same hex as its photo backdrop) and `form` (how the 3D shoe is built).
 - **Prompts:** every prompt, film and 3D job, the look bible and the shoe descriptions are in `js/shots.js`. One change there changes every prompt that uses it.
 - **Treads:** `js/soles.js` defines them once, as primitives. The same data draws the 2D treads and builds the 3D lugs.
 - **Films:** chapter timing is the `data-in` / `data-out` attributes in `index.html`; beats and duration live in `js/shots.js`; the engine is `js/film.js`.

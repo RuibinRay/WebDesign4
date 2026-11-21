@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>3D shoes · Holdfast tools</title>
+  <style>
+    body { margin: 0; padding: 16px; background: #0E1110; color: #EDEFE8; font: 13px/1.4 system-ui, sans-serif; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+    figure { margin: 0; border-radius: 10px; overflow: hidden; position: relative; aspect-ratio: 4 / 3; }
+    canvas { width: 100%; height: 100%; display: block; }
+    figcaption { position: absolute; left: 10px; top: 8px; }
+  </style>
+</head>
+<body>
+  <p>Every drawn 3D shoe on its stage colour. <code>?view=side|three|sole|explode</code>. Dev page, not linked from the site.</p>
+  <div class="grid" id="g"></div>
+  <script>window.HOLDFAST_READY = {};</script>
+  <script src="../js/data.js"></script>
+  <script src="../js/soles.js"></script>
+  <script src="../js/shoe3d.js"></script>
+  <script>
+    var view = new URLSearchParams(location.search).get('view') || 'side';
+    var P = { side: [0.04, -1.57, 0], three: [0.22, -2.0, 0], sole: [-1.3, -1.62, 0.2], explode: [0.34, -0.95, 1], back: [0.2, 0.55, 0] }[view];
+    var g = document.getElementById('g');
+    HOLDFAST.models.forEach(function (m) {
+      var fig = document.createElement('figure');
+      fig.style.background = m.stage || '#1a1f1d';
+      fig.innerHTML = '<canvas></canvas><figcaption style="color:' + (m.ink === 'dark' ? '#111' : '#EDEFE8') + '">' + m.name + ' · ' + (m.sport || m.kind) + '</figcaption>';
+      g.appendChild(fig);
+      var v = HF3D.create(fig.querySelector('canvas'), { model: m.id, mat: m.mat, form: m.form, mode: 'stage' });
+      v.setPose(P[0], P[1], P[2]);
+    });
+  </script>
+</body>
+</html>
