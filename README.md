@@ -31,7 +31,7 @@ Concept shoe brand. The brief was “Grip, or a better name.” **Holdfast** kee
 | Piece | How it works | Before Higgsfield | After |
 |---|---|---|---|
 | **Hero film** | A 300 svh section pins the screen; scrolling plays a 10 s film forward and back. Copy “chapters” fade in at set moments (“Don’t let go.” → “The wave hits.” → “The shoe stays.”). A film HUD shows the timeline, beats and timecode. Portrait phones play their own film, shot vertically (`film-hero-m`), so the whole shoe stays in frame. | The storyboard plays: the HUD reads out each beat as you scroll | Frames drawn on a canvas; with only the start and end stills, a slow push-in crossfade |
-| **03 Sport stage** | Pinned, six chapters, one per sport. The real-time 3D shoe is rebuilt for each sport from its `form` (high-top, studs, carbon plate, mid boot…) and turns from front to back as you scroll, opening slightly mid-turn. The stage takes the shoe's colour, a giant outlined word (RUN, HOOPS, SOCCER, HIKE, TRAIL, TENNIS) slides past, and the tread draws itself. Tabs are progress bars; click or use the arrow keys; drag to turn. Phones show the shoe over a short panel, with numbered tabs. | Works fully (drawn, not generated) | Same |
+| **03 Sport stage** | Pinned, six chapters, one per sport. Each sport's textured 3D model (Tripo, from its master) turns from front to back as you scroll; before it loads, a drawn build from its `form` (high-top, studs, carbon plate, mid boot…) stands in and opens slightly mid-turn. The stage takes the shoe's colour, a giant outlined word (RUN, HOOPS, SOCCER, HIKE, TRAIL, TENNIS) slides past, and the tread draws itself. Tabs are progress bars; click or use the arrow keys; drag to turn. Phones show the shoe over a short panel, with numbered tabs. | Drawn 3D builds | Textured 3D models |
 | **Press film** | Same engine, 5 s macro: the sole lands and squeezes the water out | Storyboard | Frames |
 | **04 Grip Lab** | Pinned, four chapters (one per animal, about 115 svh each). Within a chapter, scroll plays that animal's 5 s film (kelp holdfast in a surge, gecko toes flattening on glass, octopus suckers sealing, limpets under a wash) while that shoe's tread draws itself line by line. The tabs are progress bars; clicking one (or using the arrow keys) jumps to that animal. On phones the text switches from "how it holds" to "how the sole copies it" halfway through. Frames come from `assets/film/lab-<id>/d` through `HF_SEQ` in `js/film.js`. | The nature photo with a slow push-in | Frames |
 | **3D Kelp, taken apart** | A real-time three.js shoe built from the same tread data as the drawings: lugs, ribbed midsole with toe spring, footbed, knit upper with laces and heel loop. Scrolling turns it and explodes it layer by layer, one step per feature. Stop between steps and it settles onto the nearest one; arrow keys step through; drag to turn it at any step, and it eases back when you let go. | Works fully | Same (it is drawn, not generated) |
@@ -50,18 +50,13 @@ Concept shoe brand. The brief was “Grip, or a better name.” **Holdfast** kee
 | `shoe.html?m=kelp` | Shoe page, one template for all ten (`?m=gecko`, `?m=mako`, `?m=spider` …): 3D view and photos, size picker with sold-out states, bag, how it grips, specs, grip meters |
 | `shots.html` | The shot sheet (not linked from the site): every image, film and 3D model with its prompt, model, inputs, price, status and copy buttons |
 
-## The Sport line: not generated yet
+## The Sport line on Higgsfield (2026-11-21)
 
-The six sport shoes are fully built: data, treads, 3D, the stage, cards, shoe pages, and every prompt in `js/shots.js`. Until their photos exist, their slots show designed placeholders in each shoe's colour. **37 assets, 104.72 credits** (dry run on 2026-11-21, balance 2,714.30):
+**All 37 made on the first roll, 104.72 credits** (balance 2,714.30 before): six masters, then pair, sole and field shots from each master, the six together (`sport-lineup`, the six masters as references), the six animals (Soul Cinematic), and six textured Tripo 3D models (compressed from about 45 MB to 0.8–1.5 MB). Every shot kept its master's shoe, and the outsoles came out as the drawn treads (hex pads, tooth studs, hoof rim, hooks, web).
 
-| What | Count | Credits |
-|---|---|---|
-| Masters (`<id>-side`), then pair, sole and field from each master | 24 | 48.00 |
-| The six together (`sport-lineup`, 21:9, the six masters as references) | 1 | 2.00 |
-| Their animals (`nature-<id>`, Soul Cinematic) | 6 | 0.72 |
-| Textured 3D models (`3d-<id>`, Tripo). Optional: the drawn 3D already shows each build | 6 | 54.00 |
-
-`node higgsfield/generate.mjs images --go` makes the 31 images (50.72); `3d --go` makes the models. Nothing runs without `--go`.
+- The **03 Sport stage** now turns each shoe's textured model as you scroll. It swaps models in one WebGL renderer and keeps the ones it has loaded. The drawn `form` build is still the fallback while a model loads, or if one is missing.
+- The shoe pages lead with the photos; their 3D tab shows the textured model.
+- Small flaws: in `spider-field` the player's back foot wears a plain white shoe, and `sport-lineup` leaves a wide black band above and below the row.
 
 ## Generated on Higgsfield (2026-11-20)
 

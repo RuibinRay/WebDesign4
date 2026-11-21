@@ -657,6 +657,616 @@
       "file": "higgsfield/renders/film-lab-octo.mp4",
       "seconds": 268,
       "at": "2026-11-21T01:43:41.099Z"
+    },
+    "cheetah-side": {
+      "status": "done",
+      "kind": "image",
+      "model": "gpt_image_2_6",
+      "params": {
+        "resolution": "2k",
+        "quality": "high"
+      },
+      "aspect": "4:3",
+      "inputs": [],
+      "job_id": "565d47ff-390f-4b96-a091-b0f7798d508b",
+      "file": "higgsfield/renders/cheetah-side.png",
+      "seconds": 32,
+      "at": "2026-11-21T20:15:41.756Z"
+    },
+    "frog-side": {
+      "status": "done",
+      "kind": "image",
+      "model": "gpt_image_2_6",
+      "params": {
+        "resolution": "2k",
+        "quality": "high"
+      },
+      "aspect": "4:3",
+      "inputs": [],
+      "job_id": "8844897b-f085-4817-92a2-6bb85b4b1eef",
+      "file": "higgsfield/renders/frog-side.png",
+      "seconds": 36,
+      "at": "2026-11-21T20:15:44.853Z"
+    },
+    "nature-cheetah": {
+      "status": "done",
+      "kind": "image",
+      "model": "soul_cinematic",
+      "params": {
+        "quality": "2k"
+      },
+      "aspect": "3:4",
+      "inputs": [],
+      "job_id": "5e5ac320-bc48-40b9-adc3-3ee0e32e763f",
+      "file": "higgsfield/renders/nature-cheetah.png",
+      "seconds": 38,
+      "at": "2026-11-21T20:15:47.520Z"
+    },
+    "nature-frog": {
+      "status": "done",
+      "kind": "image",
+      "model": "soul_cinematic",
+      "params": {
+        "quality": "2k"
+      },
+      "aspect": "3:4",
+      "inputs": [],
+      "job_id": "305d70d6-51d9-478e-898a-411efcdcc9d2",
+      "file": "higgsfield/renders/nature-frog.png",
+      "seconds": 39,
+      "at": "2026-11-21T20:15:48.539Z"
+    },
+    "nature-mako": {
+      "status": "done",
+      "kind": "image",
+      "model": "soul_cinematic",
+      "params": {
+        "quality": "2k"
+      },
+      "aspect": "3:4",
+      "inputs": [],
+      "job_id": "9df9d11d-656f-4e87-969c-cc213d492358",
+      "file": "higgsfield/renders/nature-mako.png",
+      "seconds": 17,
+      "at": "2026-11-21T20:16:01.494Z"
+    },
+    "nature-ibex": {
+      "status": "done",
+      "kind": "image",
+      "model": "soul_cinematic",
+      "params": {
+        "quality": "2k"
+      },
+      "aspect": "3:4",
+      "inputs": [],
+      "job_id": "f10eea8e-8e7e-4f2b-a951-744c205d39f8",
+      "file": "higgsfield/renders/nature-ibex.png",
+      "seconds": 20,
+      "at": "2026-11-21T20:16:09.019Z"
+    },
+    "mako-side": {
+      "status": "done",
+      "kind": "image",
+      "model": "gpt_image_2_6",
+      "params": {
+        "resolution": "2k",
+        "quality": "high"
+      },
+      "aspect": "4:3",
+      "inputs": [],
+      "job_id": "01ed5f74-1112-463b-b974-f7a7e685cfb3",
+      "file": "higgsfield/renders/mako-side.png",
+      "seconds": 30,
+      "at": "2026-11-21T20:16:11.323Z"
+    },
+    "ibex-side": {
+      "status": "done",
+      "kind": "image",
+      "model": "gpt_image_2_6",
+      "params": {
+        "resolution": "2k",
+        "quality": "high"
+      },
+      "aspect": "4:3",
+      "inputs": [],
+      "job_id": "79662643-ce54-4155-93c9-472c413b3d66",
+      "file": "higgsfield/renders/ibex-side.png",
+      "seconds": 36,
+      "at": "2026-11-21T20:16:23.181Z"
+    },
+    "beetle-side": {
+      "status": "done",
+      "kind": "image",
+      "model": "gpt_image_2_6",
+      "params": {
+        "resolution": "2k",
+        "quality": "high"
+      },
+      "aspect": "4:3",
+      "inputs": [],
+      "job_id": "ebec0501-3721-4b3a-afb0-be5a29af2994",
+      "file": "higgsfield/renders/beetle-side.png",
+      "seconds": 33,
+      "at": "2026-11-21T20:16:34.118Z"
+    },
+    "nature-beetle": {
+      "status": "done",
+      "kind": "image",
+      "model": "soul_cinematic",
+      "params": {
+        "quality": "2k"
+      },
+      "aspect": "3:4",
+      "inputs": [],
+      "job_id": "b6f59aac-f953-4c09-b878-7ff02715ee65",
+      "file": "higgsfield/renders/nature-beetle.png",
+      "seconds": 27,
+      "at": "2026-11-21T20:16:35.587Z"
+    },
+    "nature-spider": {
+      "status": "done",
+      "kind": "image",
+      "model": "soul_cinematic",
+      "params": {
+        "quality": "2k"
+      },
+      "aspect": "3:4",
+      "inputs": [],
+      "job_id": "4b0ec5fc-8702-4c3d-bd15-823932dbe716",
+      "file": "higgsfield/renders/nature-spider.png",
+      "seconds": 17,
+      "at": "2026-11-21T20:16:40.453Z"
+    },
+    "spider-side": {
+      "status": "done",
+      "kind": "image",
+      "model": "gpt_image_2_6",
+      "params": {
+        "resolution": "2k",
+        "quality": "high"
+      },
+      "aspect": "4:3",
+      "inputs": [],
+      "job_id": "361a040f-52fc-48f0-81ca-21b0c04f7854",
+      "file": "higgsfield/renders/spider-side.png",
+      "seconds": 32,
+      "at": "2026-11-21T20:16:43.782Z"
+    },
+    "cheetah-pair": {
+      "status": "done",
+      "kind": "image",
+      "model": "gpt_image_2_6",
+      "params": {
+        "resolution": "2k",
+        "quality": "high"
+      },
+      "aspect": "4:5",
+      "inputs": [
+        "cheetah-side"
+      ],
+      "job_id": "3b97e77c-0e96-4065-8fb9-9bca45b1dbb4",
+      "file": "higgsfield/renders/cheetah-pair.png",
+      "seconds": 43,
+      "at": "2026-11-21T20:17:26.498Z"
+    },
+    "cheetah-field": {
+      "status": "done",
+      "kind": "image",
+      "model": "gpt_image_2_6",
+      "params": {
+        "resolution": "2k",
+        "quality": "high"
+      },
+      "aspect": "3:2",
+      "inputs": [
+        "cheetah-side"
+      ],
+      "job_id": "065f3f5a-b1b1-4c0c-a321-09265ea82d6a",
+      "file": "higgsfield/renders/cheetah-field.png",
+      "seconds": 43,
+      "at": "2026-11-21T20:17:27.048Z"
+    },
+    "cheetah-sole": {
+      "status": "done",
+      "kind": "image",
+      "model": "gpt_image_2_6",
+      "params": {
+        "resolution": "2k",
+        "quality": "high"
+      },
+      "aspect": "3:4",
+      "inputs": [
+        "cheetah-side"
+      ],
+      "job_id": "9d76f6af-224e-44f9-aca0-f9ae68efe684",
+      "file": "higgsfield/renders/cheetah-sole.png",
+      "seconds": 43,
+      "at": "2026-11-21T20:17:27.141Z"
+    },
+    "frog-pair": {
+      "status": "done",
+      "kind": "image",
+      "model": "gpt_image_2_6",
+      "params": {
+        "resolution": "2k",
+        "quality": "high"
+      },
+      "aspect": "4:5",
+      "inputs": [
+        "frog-side"
+      ],
+      "job_id": "177d48d3-c402-452f-9e9c-11508e250df4",
+      "file": "higgsfield/renders/frog-pair.png",
+      "seconds": 51,
+      "at": "2026-11-21T20:17:34.370Z"
+    },
+    "frog-sole": {
+      "status": "done",
+      "kind": "image",
+      "model": "gpt_image_2_6",
+      "params": {
+        "resolution": "2k",
+        "quality": "high"
+      },
+      "aspect": "3:4",
+      "inputs": [
+        "frog-side"
+      ],
+      "job_id": "11102f1d-a5df-426f-b4cd-91018aeb5a3c",
+      "file": "higgsfield/renders/frog-sole.png",
+      "seconds": 39,
+      "at": "2026-11-21T20:18:05.370Z"
+    },
+    "frog-field": {
+      "status": "done",
+      "kind": "image",
+      "model": "gpt_image_2_6",
+      "params": {
+        "resolution": "2k",
+        "quality": "high"
+      },
+      "aspect": "3:2",
+      "inputs": [
+        "frog-side"
+      ],
+      "job_id": "f7eb52bd-4203-4e95-8e39-1d15bf5ebfeb",
+      "file": "higgsfield/renders/frog-field.png",
+      "seconds": 42,
+      "at": "2026-11-21T20:18:08.786Z"
+    },
+    "mako-pair": {
+      "status": "done",
+      "kind": "image",
+      "model": "gpt_image_2_6",
+      "params": {
+        "resolution": "2k",
+        "quality": "high"
+      },
+      "aspect": "4:5",
+      "inputs": [
+        "mako-side"
+      ],
+      "job_id": "6cacc731-34a5-4c7e-9d69-7d2866419fc0",
+      "file": "higgsfield/renders/mako-pair.png",
+      "seconds": 45,
+      "at": "2026-11-21T20:18:11.685Z"
+    },
+    "mako-sole": {
+      "status": "done",
+      "kind": "image",
+      "model": "gpt_image_2_6",
+      "params": {
+        "resolution": "2k",
+        "quality": "high"
+      },
+      "aspect": "3:4",
+      "inputs": [
+        "mako-side"
+      ],
+      "job_id": "b035b4b9-20a4-44e5-9705-0fd8faef6080",
+      "file": "higgsfield/renders/mako-sole.png",
+      "seconds": 39,
+      "at": "2026-11-21T20:18:13.296Z"
+    },
+    "mako-field": {
+      "status": "done",
+      "kind": "image",
+      "model": "gpt_image_2_6",
+      "params": {
+        "resolution": "2k",
+        "quality": "high"
+      },
+      "aspect": "3:2",
+      "inputs": [
+        "mako-side"
+      ],
+      "job_id": "f1e0d13b-4fb3-4a77-a66d-0300c53e6075",
+      "file": "higgsfield/renders/mako-field.png",
+      "seconds": 43,
+      "at": "2026-11-21T20:18:48.077Z"
+    },
+    "ibex-sole": {
+      "status": "done",
+      "kind": "image",
+      "model": "gpt_image_2_6",
+      "params": {
+        "resolution": "2k",
+        "quality": "high"
+      },
+      "aspect": "3:4",
+      "inputs": [
+        "ibex-side"
+      ],
+      "job_id": "9bd9b62f-76d6-4863-8d65-323440478b8b",
+      "file": "higgsfield/renders/ibex-sole.png",
+      "seconds": 38,
+      "at": "2026-11-21T20:18:49.350Z"
+    },
+    "ibex-pair": {
+      "status": "done",
+      "kind": "image",
+      "model": "gpt_image_2_6",
+      "params": {
+        "resolution": "2k",
+        "quality": "high"
+      },
+      "aspect": "4:5",
+      "inputs": [
+        "ibex-side"
+      ],
+      "job_id": "39d1a394-d749-46f0-9ece-7ca111f92e0c",
+      "file": "higgsfield/renders/ibex-pair.png",
+      "seconds": 43,
+      "at": "2026-11-21T20:18:51.771Z"
+    },
+    "ibex-field": {
+      "status": "done",
+      "kind": "image",
+      "model": "gpt_image_2_6",
+      "params": {
+        "resolution": "2k",
+        "quality": "high"
+      },
+      "aspect": "3:2",
+      "inputs": [
+        "ibex-side"
+      ],
+      "job_id": "6315c8a2-4da0-47b7-884a-99b19262c631",
+      "file": "higgsfield/renders/ibex-field.png",
+      "seconds": 43,
+      "at": "2026-11-21T20:18:56.650Z"
+    },
+    "beetle-sole": {
+      "status": "done",
+      "kind": "image",
+      "model": "gpt_image_2_6",
+      "params": {
+        "resolution": "2k",
+        "quality": "high"
+      },
+      "aspect": "3:4",
+      "inputs": [
+        "beetle-side"
+      ],
+      "job_id": "8f5baa49-7e56-4486-92dd-9f922dee4c1c",
+      "file": "higgsfield/renders/beetle-sole.png",
+      "seconds": 40,
+      "at": "2026-11-21T20:19:29.207Z"
+    },
+    "beetle-pair": {
+      "status": "done",
+      "kind": "image",
+      "model": "gpt_image_2_6",
+      "params": {
+        "resolution": "2k",
+        "quality": "high"
+      },
+      "aspect": "4:5",
+      "inputs": [
+        "beetle-side"
+      ],
+      "job_id": "27b77517-808e-42f8-bf45-668855f09e87",
+      "file": "higgsfield/renders/beetle-pair.png",
+      "seconds": 46,
+      "at": "2026-11-21T20:19:34.495Z"
+    },
+    "beetle-field": {
+      "status": "done",
+      "kind": "image",
+      "model": "gpt_image_2_6",
+      "params": {
+        "resolution": "2k",
+        "quality": "high"
+      },
+      "aspect": "3:2",
+      "inputs": [
+        "beetle-side"
+      ],
+      "job_id": "f02e2a21-2e61-4d93-baf1-8f28af458718",
+      "file": "higgsfield/renders/beetle-field.png",
+      "seconds": 46,
+      "at": "2026-11-21T20:19:37.418Z"
+    },
+    "spider-pair": {
+      "status": "done",
+      "kind": "image",
+      "model": "gpt_image_2_6",
+      "params": {
+        "resolution": "2k",
+        "quality": "high"
+      },
+      "aspect": "4:5",
+      "inputs": [
+        "spider-side"
+      ],
+      "job_id": "1fffa375-24f8-486b-baca-28d192c0acf7",
+      "file": "higgsfield/renders/spider-pair.png",
+      "seconds": 42,
+      "at": "2026-11-21T20:19:39.069Z"
+    },
+    "spider-field": {
+      "status": "done",
+      "kind": "image",
+      "model": "gpt_image_2_6",
+      "params": {
+        "resolution": "2k",
+        "quality": "high"
+      },
+      "aspect": "3:2",
+      "inputs": [
+        "spider-side"
+      ],
+      "job_id": "61889d3e-7251-44ec-9cf7-e128d1e53730",
+      "file": "higgsfield/renders/spider-field.png",
+      "seconds": 37,
+      "at": "2026-11-21T20:20:11.578Z"
+    },
+    "spider-sole": {
+      "status": "done",
+      "kind": "image",
+      "model": "gpt_image_2_6",
+      "params": {
+        "resolution": "2k",
+        "quality": "high"
+      },
+      "aspect": "3:4",
+      "inputs": [
+        "spider-side"
+      ],
+      "job_id": "12869e46-6f3f-4b6b-a4f4-97e6b653dc4a",
+      "file": "higgsfield/renders/spider-sole.png",
+      "seconds": 44,
+      "at": "2026-11-21T20:20:12.836Z"
+    },
+    "sport-lineup": {
+      "status": "done",
+      "kind": "image",
+      "model": "gpt_image_2_6",
+      "params": {
+        "resolution": "2k",
+        "quality": "high"
+      },
+      "aspect": "21:9",
+      "inputs": [
+        "cheetah-side",
+        "frog-side",
+        "mako-side",
+        "ibex-side",
+        "beetle-side",
+        "spider-side"
+      ],
+      "job_id": "3ebda5e3-f0a5-499d-b226-c55029a65ea4",
+      "file": "higgsfield/renders/sport-lineup.png",
+      "seconds": 56,
+      "at": "2026-11-21T20:20:33.459Z"
+    },
+    "3d-mako": {
+      "status": "done",
+      "kind": "model3d",
+      "model": "tripo_h3_1_image_to_3d",
+      "params": {
+        "texture": true,
+        "pbr": true,
+        "orientation": "align_image"
+      },
+      "aspect": "3D",
+      "inputs": [
+        "mako-side"
+      ],
+      "job_id": "70857fd0-fba4-47cb-9999-5ad7ec8d1422",
+      "file": "higgsfield/renders/3d-mako.glb",
+      "seconds": 121,
+      "at": "2026-11-21T20:22:34.223Z"
+    },
+    "3d-ibex": {
+      "status": "done",
+      "kind": "model3d",
+      "model": "tripo_h3_1_image_to_3d",
+      "params": {
+        "texture": true,
+        "pbr": true,
+        "orientation": "align_image"
+      },
+      "aspect": "3D",
+      "inputs": [
+        "ibex-side"
+      ],
+      "job_id": "16ad4c32-40d5-4e68-b57d-482794826a44",
+      "file": "higgsfield/renders/3d-ibex.glb",
+      "seconds": 151,
+      "at": "2026-11-21T20:23:04.810Z"
+    },
+    "3d-cheetah": {
+      "status": "done",
+      "kind": "model3d",
+      "model": "tripo_h3_1_image_to_3d",
+      "params": {
+        "texture": true,
+        "pbr": true,
+        "orientation": "align_image"
+      },
+      "aspect": "3D",
+      "inputs": [
+        "cheetah-side"
+      ],
+      "job_id": "4ffef0c3-c32c-485d-9ef6-d30475366493",
+      "file": "higgsfield/renders/3d-cheetah.glb",
+      "seconds": 157,
+      "at": "2026-11-21T20:23:10.937Z"
+    },
+    "3d-frog": {
+      "status": "done",
+      "kind": "model3d",
+      "model": "tripo_h3_1_image_to_3d",
+      "params": {
+        "texture": true,
+        "pbr": true,
+        "orientation": "align_image"
+      },
+      "aspect": "3D",
+      "inputs": [
+        "frog-side"
+      ],
+      "job_id": "bbdb6b08-cd20-457b-b9da-4895fee16415",
+      "file": "higgsfield/renders/3d-frog.glb",
+      "seconds": 159,
+      "at": "2026-11-21T20:23:12.214Z"
+    },
+    "3d-beetle": {
+      "status": "done",
+      "kind": "model3d",
+      "model": "tripo_h3_1_image_to_3d",
+      "params": {
+        "texture": true,
+        "pbr": true,
+        "orientation": "align_image"
+      },
+      "aspect": "3D",
+      "inputs": [
+        "beetle-side"
+      ],
+      "job_id": "73475887-1d61-4dac-90a7-3230b73e8a19",
+      "file": "higgsfield/renders/3d-beetle.glb",
+      "seconds": 141,
+      "at": "2026-11-21T20:24:55.401Z"
+    },
+    "3d-spider": {
+      "status": "done",
+      "kind": "model3d",
+      "model": "tripo_h3_1_image_to_3d",
+      "params": {
+        "texture": true,
+        "pbr": true,
+        "orientation": "align_image"
+      },
+      "aspect": "3D",
+      "inputs": [
+        "spider-side"
+      ],
+      "job_id": "fa58efdf-c379-47bc-b17f-52c385848ed3",
+      "file": "higgsfield/renders/3d-spider.glb",
+      "seconds": 151,
+      "at": "2026-11-21T20:25:36.094Z"
     }
   }
 }

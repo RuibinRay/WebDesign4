@@ -38,6 +38,9 @@
     var spTabs = $('[data-sport-tabs]', sp), spInfo = $('[data-sport-info]', sp), spSole = $('[data-sport-sole]', sp);
     var spWord = $('[data-sport-word]', sp), spN = $('[data-sport-n]', sp), spCanvas = $('[data-sport-canvas]', sp), spFb = $('[data-sport-fallback]', sp);
     var spSvg = null, pad = function (n) { return (n < 10 ? '0' : '') + n; };
+    /* the textured Higgsfield model where one exists; the drawn build otherwise */
+    var GLB = ((root.HOLDFAST_READY || {}).model3d || []);
+    var glbOf = function (m) { return GLB.indexOf(m.id) > -1 ? 'assets/3d/' + m.id + '.glb' : null; };
     var SPEC = { weight: 'Weight', drop: 'Drop', stack: 'Stack', lug: 'Grip', plate: 'Plate', cut: 'Cut' };
 
     spTabs.innerHTML = SP.map(function (m, i) {
@@ -66,7 +69,7 @@
       spSole.innerHTML = '<span class="sport__sole-tag">Outsole · ' + esc(m.name) + '</span>' + ART.sole(m.id, { className: 'sole--scrub', label: 'The ' + m.name + ' outsole, drawn' });
       spSvg = spSole.querySelector('svg');
       spFb.innerHTML = ART.sole(m.id, { label: '' });
-      if (spView) spView.setModel(m.id, m.mat, m.form);
+      if (spView) spView.setModel(m.id, m.mat, m.form, glbOf(m));
     };
     var spPaint = function () {
       var q = spQ, still = UI.reduce();
@@ -85,7 +88,7 @@
         UI.load3d(function (H) {
           if (!H.supported()) { sp.classList.add('no-3d'); return; }
           var m = SP[Math.max(0, spChapter)];
-          spView = H.create(spCanvas, { model: m.id, mat: m.mat, form: m.form, mode: 'stage' });
+          spView = H.create(spCanvas, { model: m.id, mat: m.mat, form: m.form, mode: 'stage', glb: glbOf(m) });
           spCanvas.setAttribute('aria-label', 'A real-time 3D view of the Holdfast sport shoes, one per sport. Drag to turn it.');
           sp.classList.add('has-3d');
           spPaint();

@@ -326,25 +326,41 @@ export function create(canvas, opts) {
   }
   install(opts.model, mat, opts.form);
 
-  /* optional: a Higgsfield image-to-3D model replaces the drawn shoe in viewer mode */
-  let glb = null;
-  if (opts.glb && opts.mode === 'viewer') {
-    new GLTFLoader().load(opts.glb, (g) => {
-      glb = g.scene;
-      const box = new Box3().setFromObject(glb), size = box.getSize(new Vector3()), mid = box.getCenter(new Vector3());
-      const s = 4.84 / Math.max(size.x, size.z);
-      glb.position.sub(mid.multiplyScalar(s));
-      glb.scale.setScalar(s);
-      glb.rotation.y = opts.glbRotateY || 0;
-      /* scanned textures already carry their lighting; full studio reflections wash them out */
-      glb.traverse((o) => { if (o.material) { o.material.envMapIntensity = 0.45; o.material.color.multiplyScalar(0.82); o.material.needsUpdate = true; } });
+  /* optional: a Higgsfield image-to-3D model replaces the drawn shoe (viewer mode, and each chapter of
+     stage mode). Loaded models are kept, so scrolling back to a shoe shows it at once. */
+  let glb = null, glbWant = null;
+  const glbCache = new Map();
+  function fitGlb(scene) {
+    const box = new Box3().setFromObject(scene), size = box.getSize(new Vector3()), mid = box.getCenter(new Vector3());
+    const s = 4.84 / Math.max(size.x, size.z);
+    scene.position.sub(mid.multiplyScalar(s));
+    scene.scale.setScalar(s);
+    scene.rotation.y = opts.glbRotateY || 0;
+    /* scanned textures already carry their lighting; full studio reflections wash them out */
+    scene.traverse((o) => { if (o.material) { o.material.envMapIntensity = 0.45; o.material.color.multiplyScalar(0.82); o.material.needsUpdate = true; } });
+    return scene;
+  }
+  function showGlb(url) {
+    glbWant = url;
+    if (glb) { shoe.remove(glb); glb = null; }
+    renderer.toneMappingExposure = 1.05;
+    Object.values(layers).forEach((l) => (l.visible = true));
+    if (!url) return;
+    const place = (scene) => {
+      if (glbWant !== url) return;
+      glb = scene;
       renderer.toneMappingExposure = 0.85;
-      if (opts.onGlb) opts.onGlb();
       Object.values(layers).forEach((l) => (l.visible = false));
       shoe.add(glb);
-      dirty = true;
-    }, undefined, () => {});
+      if (opts.onGlb) opts.onGlb();
+      dirty = true; wake();
+    };
+    if (glbCache.has(url)) { const c = glbCache.get(url); if (c.scene) place(c.scene); return; }
+    const entry = { scene: null };
+    glbCache.set(url, entry);
+    new GLTFLoader().load(url, (g) => { entry.scene = fitGlb(g.scene); place(entry.scene); }, undefined, () => {});
   }
+
 
   /* state */
   const cur = { rx: K[0].rx, ry: K[0].ry, e: 0 };
@@ -362,6 +378,7 @@ export function create(canvas, opts) {
     camera.updateProjectionMatrix();
     dirty = true;
   }
+  if (opts.glb && opts.mode !== 'explode') showGlb(opts.glb);
   const ro = new ResizeObserver(resize);
   ro.observe(canvas.parentElement);
   resize();
@@ -384,7 +401,8 @@ export function create(canvas, opts) {
     }
     /* a new shoe drops in with a quarter turn */
     if (swap > 0.001) { swap *= Math.exp(-dt * 5.5); moving = true; } else swap = 0;
-    shoe.position.y = -0.6 + 0.9 * swap * swap;
+    /* a scanned model is centred on its middle, the drawn one sits on its sole: lift the scan on the wide stage */
+    shoe.position.y = (glb && opts.mode === 'stage' ? -0.15 : -0.6) + 0.9 * swap * swap;
     shoe.scale.setScalar(1 - 0.18 * swap);
     pivot.rotation.set(cur.rx + grab.rx, cur.ry + grab.ry - 1.1 * swap, 0, 'XYZ');
     const e = cur.e;
@@ -461,7 +479,7 @@ export function create(canvas, opts) {
     spin(on) { idleSpin = on; wake(); },
     /* stage mode: the page sets the pose from scroll, and swaps the shoe per chapter */
     setPose(rx, ry, e) { tgt.rx = rx; tgt.ry = ry; tgt.e = e || 0; wake(); },
-    setModel(model, m, form) { install(model, m, form); swap = 1; dirty = true; wake(); },
+    setModel(model, m, form, glbUrl) { install(model, m, form); showGlb(glbUrl || null); swap = 1; dirty = true; wake(); },
     render() { dirty = true; wake(); },
     dispose() { cancelAnimationFrame(raf); ro.disconnect(); io.disconnect(); renderer.dispose(); },
   };
