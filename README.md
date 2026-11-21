@@ -1,5 +1,7 @@
 # Holdfast · shoes that don’t let go
 
+**Live:** https://ruibinray.github.io/WebDesign4/ (GitHub Pages, deployed from `main`, root folder; repository [RuibinRay/WebDesign4](https://github.com/RuibinRay/WebDesign4)).
+
 Concept shoe brand. The brief was “Grip, or a better name.” **Holdfast** keeps the idea and gives it a story: a kelp’s holdfast is the knot of fingers that grips bare rock through storms. The range copies four animals that never slip.
 
 | Shoe | Learned from | For | Price |
